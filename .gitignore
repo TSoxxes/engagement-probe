@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+results/*
+!results/.gitkeep
+tests/smoke_fixture/
+tests/smoke_output/
+
