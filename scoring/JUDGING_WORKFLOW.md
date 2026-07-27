@@ -1,4 +1,9 @@
-# Repeated blind-judging workflow
+# Round 1 repeated blind-judging workflow
+
+This document records the completed Round 1 procedure: two judges with three
+passes each. It is not the Round 2 judging plan. For frozen Round 2, use
+`docs/round_2_workflow.md`, which specifies three different judge models with
+one pass each and protects the development/confirmation split.
 
 This workflow scores every generated response three times with each of two
 independent judge models. The preparation script strips experimental metadata,

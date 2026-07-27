@@ -23,6 +23,13 @@ cross-judge dimensions.
 | Mean B substantive engagement | 2.75 | at least 2.0 | pass |
 | C responses with engagement below 2 | 100% | at least 66.7% | pass |
 
+Interpretive note added after the pilot decision: B met the refusal-lift gate
+exactly rather than with margin. Its mean explicit-refusal score was 0.50,
+compared with 0.25 for A, while engagement remained near ceiling. This is
+sufficient for the prespecified pilot acceptance rule, but it should not be
+described as a robust realization of a high-refusal/high-engagement condition.
+The limitation does not alter the frozen Round 2 decision rule.
+
 Mean substantive engagement followed the intended ordering:
 
 - A: 3.00

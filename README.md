@@ -24,6 +24,8 @@ protocol. See:
 - `docs/round_2_pilot_report.md`
 - `docs/round_2_protocol.md`
 - `docs/round_2_workflow.md`
+- `docs/design_review_response.md`
+- `docs/project_roadmap.md`
 
 ## What is included
 
@@ -52,6 +54,8 @@ willingness-probe/
     round_2_pilot_report.md
     round_2_protocol.md
     round_2_workflow.md
+    design_review_response.md
+    project_roadmap.md
   scoring/
     JUDGING_WORKFLOW.md
     batch_judge_prompt.md

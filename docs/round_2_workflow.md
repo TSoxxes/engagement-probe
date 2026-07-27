@@ -163,6 +163,28 @@ python src/prepare_judging.py `
   --min-prompt-gap 2
 ```
 
+### Protect the confirmation split
+
+The command above creates one blinded, position-balanced packet set containing
+both splits. This is acceptable when all scores are collected with the same
+locked judge models and settings: do not inspect confirmation-specific scores,
+change the rubric, or alter any analysis setting after judging begins. The
+analysis script uses development ladders for layer selection and evaluates the
+confirmation ladders only after that selection.
+
+If judging must be purchased incrementally, stage it by dataset split rather
+than by the shuffled batch numbers. Create separate response files by joining
+`responses.jsonl` to the `split` field in `data/round2_ladders.jsonl`, complete
+the development packets first, and keep the confirmation packets sealed until
+development scoring and adjudication are complete. Lock the exact judge model
+versions, prompts, and settings before either stage. Staging is an operational
+and budget measure; it does not authorize changing any frozen rule based on
+development results.
+
+Do not treat batches 1, 2, and so forth as development stages. The default
+packet ordering deliberately mixes prompts, so ordinary batch order does not
+preserve the split.
+
 Use `scoring/round2_batch_judge_prompt.md`. Each judge should be a different
 frontier model. Keep `private_mapping.jsonl` hidden.
 
