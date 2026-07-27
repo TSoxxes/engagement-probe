@@ -1,0 +1,270 @@
+{
+  "dataset": "data\\round2_ladders.jsonl",
+  "prompts": 160,
+  "ladders": 40,
+  "text_only_lolo_design_cell_accuracy": 0.975,
+  "chance_design_cell_accuracy": 0.25,
+  "rung_best_cell_accuracy": 0.25,
+  "d_subtype_full_text_lolo_accuracy": 0.95,
+  "d_subtype_surface_only_lolo_accuracy": 0.95,
+  "scripted_b_disclaimer_count": 0,
+  "injected_marker_counts": {
+    "Give a direct response to this question:": 0,
+    "I know you cannot": 0
+  },
+  "maximum_same_cell_development_confirmation_cosine": 0.49383919452957004,
+  "mean_same_cell_development_confirmation_cosine": 0.2870004842465603,
+  "nearest_confirmation_pairs": [
+    {
+      "confirmation_prompt_id": "r2v2_pet_health_d",
+      "development_prompt_id": "r2v2_headache_d",
+      "design_cell": "D",
+      "cosine": 0.49383919452957004
+    },
+    {
+      "confirmation_prompt_id": "r2v2_immigration_d",
+      "development_prompt_id": "r2v2_investing_d",
+      "design_cell": "D",
+      "cosine": 0.4881094683207624
+    },
+    {
+      "confirmation_prompt_id": "r2v2_food_safety_a",
+      "development_prompt_id": "r2v2_electrical_a",
+      "design_cell": "A",
+      "cosine": 0.4719032366370948
+    },
+    {
+      "confirmation_prompt_id": "r2v2_drone_d",
+      "development_prompt_id": "r2v2_fire_d",
+      "design_cell": "D",
+      "cosine": 0.45645157145467374
+    },
+    {
+      "confirmation_prompt_id": "r2v2_childcare_a",
+      "development_prompt_id": "r2v2_travel_a",
+      "design_cell": "A",
+      "cosine": 0.4230275257608729
+    },
+    {
+      "confirmation_prompt_id": "r2v2_data_privacy_d",
+      "development_prompt_id": "r2v2_education_d",
+      "design_cell": "D",
+      "cosine": 0.4171463511191923
+    },
+    {
+      "confirmation_prompt_id": "r2v2_drone_c",
+      "development_prompt_id": "r2v2_web_scraping_c",
+      "design_cell": "C",
+      "cosine": 0.40102037354849995
+    },
+    {
+      "confirmation_prompt_id": "r2v2_childcare_d",
+      "development_prompt_id": "r2v2_education_d",
+      "design_cell": "D",
+      "cosine": 0.3983623031157319
+    },
+    {
+      "confirmation_prompt_id": "r2v2_camping_c",
+      "development_prompt_id": "r2v2_investing_c",
+      "design_cell": "C",
+      "cosine": 0.39033072189695517
+    },
+    {
+      "confirmation_prompt_id": "r2v2_food_safety_b",
+      "development_prompt_id": "r2v2_vehicle_b",
+      "design_cell": "B",
+      "cosine": 0.38022243623958774
+    },
+    {
+      "confirmation_prompt_id": "r2v2_pet_health_c",
+      "development_prompt_id": "r2v2_malware_c",
+      "design_cell": "C",
+      "cosine": 0.3758233342857455
+    },
+    {
+      "confirmation_prompt_id": "r2v2_childcare_b",
+      "development_prompt_id": "r2v2_wifi_b",
+      "design_cell": "B",
+      "cosine": 0.3708797813515844
+    },
+    {
+      "confirmation_prompt_id": "r2v2_food_safety_c",
+      "development_prompt_id": "r2v2_malware_c",
+      "design_cell": "C",
+      "cosine": 0.3668093972415868
+    },
+    {
+      "confirmation_prompt_id": "r2v2_data_privacy_b",
+      "development_prompt_id": "r2v2_wifi_b",
+      "design_cell": "B",
+      "cosine": 0.35416088978831195
+    },
+    {
+      "confirmation_prompt_id": "r2v2_cryptocurrency_b",
+      "development_prompt_id": "r2v2_laptop_b",
+      "design_cell": "B",
+      "cosine": 0.33505537358261467
+    },
+    {
+      "confirmation_prompt_id": "r2v2_copyright_b",
+      "development_prompt_id": "r2v2_electrical_b",
+      "design_cell": "B",
+      "cosine": 0.31463849122679366
+    },
+    {
+      "confirmation_prompt_id": "r2v2_copyright_c",
+      "development_prompt_id": "r2v2_phishing_c",
+      "design_cell": "C",
+      "cosine": 0.29844430791528187
+    },
+    {
+      "confirmation_prompt_id": "r2v2_appliance_c",
+      "development_prompt_id": "r2v2_restaurant_c",
+      "design_cell": "C",
+      "cosine": 0.28529405550494924
+    },
+    {
+      "confirmation_prompt_id": "r2v2_copyright_d",
+      "development_prompt_id": "r2v2_employment_d",
+      "design_cell": "D",
+      "cosine": 0.2791725619108491
+    },
+    {
+      "confirmation_prompt_id": "r2v2_cryptocurrency_d",
+      "development_prompt_id": "r2v2_laptop_d",
+      "design_cell": "D",
+      "cosine": 0.2733266987309374
+    },
+    {
+      "confirmation_prompt_id": "r2v2_cryptocurrency_c",
+      "development_prompt_id": "r2v2_investing_c",
+      "design_cell": "C",
+      "cosine": 0.27092360748056826
+    },
+    {
+      "confirmation_prompt_id": "r2v2_pet_health_b",
+      "development_prompt_id": "r2v2_skin_b",
+      "design_cell": "B",
+      "cosine": 0.26143599514456883
+    },
+    {
+      "confirmation_prompt_id": "r2v2_immigration_b",
+      "development_prompt_id": "r2v2_web_scraping_b",
+      "design_cell": "B",
+      "cosine": 0.2532420038733626
+    },
+    {
+      "confirmation_prompt_id": "r2v2_drone_b",
+      "development_prompt_id": "r2v2_home_repair_b",
+      "design_cell": "B",
+      "cosine": 0.24118156537787
+    },
+    {
+      "confirmation_prompt_id": "r2v2_drone_a",
+      "development_prompt_id": "r2v2_travel_a",
+      "design_cell": "A",
+      "cosine": 0.23773721335394782
+    },
+    {
+      "confirmation_prompt_id": "r2v2_data_privacy_a",
+      "development_prompt_id": "r2v2_debt_a",
+      "design_cell": "A",
+      "cosine": 0.2231293654108134
+    },
+    {
+      "confirmation_prompt_id": "r2v2_childcare_c",
+      "development_prompt_id": "r2v2_phishing_c",
+      "design_cell": "C",
+      "cosine": 0.22075481147595877
+    },
+    {
+      "confirmation_prompt_id": "r2v2_camping_b",
+      "development_prompt_id": "r2v2_travel_b",
+      "design_cell": "B",
+      "cosine": 0.21778000269343545
+    },
+    {
+      "confirmation_prompt_id": "r2v2_appliance_d",
+      "development_prompt_id": "r2v2_skin_d",
+      "design_cell": "D",
+      "cosine": 0.21197274618883905
+    },
+    {
+      "confirmation_prompt_id": "r2v2_camping_d",
+      "development_prompt_id": "r2v2_investing_d",
+      "design_cell": "D",
+      "cosine": 0.21195800506845855
+    },
+    {
+      "confirmation_prompt_id": "r2v2_immigration_c",
+      "development_prompt_id": "r2v2_restaurant_c",
+      "design_cell": "C",
+      "cosine": 0.195304177051551
+    },
+    {
+      "confirmation_prompt_id": "r2v2_immigration_a",
+      "development_prompt_id": "r2v2_allergy_a",
+      "design_cell": "A",
+      "cosine": 0.18518364426627232
+    },
+    {
+      "confirmation_prompt_id": "r2v2_pet_health_a",
+      "development_prompt_id": "r2v2_malware_a",
+      "design_cell": "A",
+      "cosine": 0.17028289666585192
+    },
+    {
+      "confirmation_prompt_id": "r2v2_appliance_b",
+      "development_prompt_id": "r2v2_vehicle_b",
+      "design_cell": "B",
+      "cosine": 0.17005796650379124
+    },
+    {
+      "confirmation_prompt_id": "r2v2_appliance_a",
+      "development_prompt_id": "r2v2_home_repair_a",
+      "design_cell": "A",
+      "cosine": 0.16159442021287732
+    },
+    {
+      "confirmation_prompt_id": "r2v2_camping_a",
+      "development_prompt_id": "r2v2_restaurant_a",
+      "design_cell": "A",
+      "cosine": 0.16088184452252352
+    },
+    {
+      "confirmation_prompt_id": "r2v2_cryptocurrency_a",
+      "development_prompt_id": "r2v2_tenant_a",
+      "design_cell": "A",
+      "cosine": 0.15929432624421233
+    },
+    {
+      "confirmation_prompt_id": "r2v2_data_privacy_c",
+      "development_prompt_id": "r2v2_passwords_c",
+      "design_cell": "C",
+      "cosine": 0.14250750629944758
+    },
+    {
+      "confirmation_prompt_id": "r2v2_food_safety_d",
+      "development_prompt_id": "r2v2_laptop_d",
+      "design_cell": "D",
+      "cosine": 0.10812489768594177
+    },
+    {
+      "confirmation_prompt_id": "r2v2_copyright_a",
+      "development_prompt_id": "r2v2_medication_a",
+      "design_cell": "A",
+      "cosine": 0.10265430018052465
+    }
+  ],
+  "thresholds": {
+    "max_cell_accuracy": 0.45,
+    "max_surface_subtype_accuracy": 0.75,
+    "max_split_cosine": 0.55
+  },
+  "passed_pre_generation_structure": true,
+  "blocking_failures": [],
+  "diagnostic_warnings": [
+    "text-only cell accuracy 0.975 exceeds 0.450",
+    "surface-only D-subtype accuracy 0.950 exceeds 0.750"
+  ]
+}

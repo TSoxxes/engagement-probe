@@ -17,7 +17,11 @@ import torch
 import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from generation_utils import infer_finish_reason, resolve_eos_token_id
+from generation_utils import (
+    infer_finish_reason,
+    resolve_eos_token_id,
+    resolve_generation_counts,
+)
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -38,6 +42,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("results/run_main"))
     parser.add_argument("--model", default="google/gemma-2-2b-it")
     parser.add_argument("--num-generations", type=int, default=4)
+    parser.add_argument(
+        "--generation-count-field",
+        help="Dataset field containing a prespecified per-prompt generation count.",
+    )
     parser.add_argument("--max-new-tokens", type=int, default=600)
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top-p", type=float, default=0.95)
@@ -75,6 +83,13 @@ def main() -> None:
     prompt_ids = [row["prompt_id"] for row in prompts]
     if len(prompt_ids) != len(set(prompt_ids)):
         raise ValueError("prompt_id values must be unique")
+    generation_counts = resolve_generation_counts(
+        prompts,
+        args.num_generations,
+        args.generation_count_field,
+    )
+    seed_stride = max(generation_counts)
+    total_generations = sum(generation_counts)
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     dtype = choose_dtype()
@@ -130,8 +145,9 @@ def main() -> None:
             activation_token_ids.append(int(input_ids[0, -1].item()))
             del forward, final_prompt_states
 
-            for generation_id in range(args.num_generations):
-                seed = args.base_seed + prompt_index * args.num_generations + generation_id
+            prompt_generation_count = generation_counts[prompt_index]
+            for generation_id in range(prompt_generation_count):
+                seed = args.base_seed + prompt_index * seed_stride + generation_id
                 torch.manual_seed(seed)
                 torch.cuda.manual_seed_all(seed)
                 do_sample = args.temperature > 0
@@ -179,7 +195,8 @@ def main() -> None:
                 response_file.flush()
                 print(
                     f"[{prompt_index + 1:02d}/{len(prompts)}] "
-                    f"{item['prompt_id']} generation {generation_id + 1}/{args.num_generations}"
+                    f"{item['prompt_id']} generation "
+                    f"{generation_id + 1}/{prompt_generation_count}"
                 )
                 del generated, new_token_ids
 
@@ -196,6 +213,10 @@ def main() -> None:
         "dataset": str(args.dataset),
         "num_prompts": len(prompts),
         "num_generations": args.num_generations,
+        "generation_count_field": args.generation_count_field,
+        "generation_count_minimum": min(generation_counts),
+        "generation_count_maximum": max(generation_counts),
+        "total_generations": total_generations,
         "max_new_tokens": args.max_new_tokens,
         "temperature": args.temperature,
         "top_p": args.top_p,
@@ -204,7 +225,7 @@ def main() -> None:
         "finish_reason_counts": finish_reason_counts,
         "num_capped_responses": finish_reason_counts["length"],
         "capped_response_rate": (
-            finish_reason_counts["length"] / (len(prompts) * args.num_generations)
+            finish_reason_counts["length"] / total_generations
         ),
         "activation_position": "last token of chat template with generation prompt",
         "activation_shape": list(activation_array.shape),

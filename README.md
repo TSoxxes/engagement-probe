@@ -9,6 +9,22 @@ It intentionally does **not** claim that the model has a distinct "willingness"
 mechanism. The pilot only checks whether a candidate engagement signal is worth
 studying further.
 
+Round 1 is complete. Round 2 is frozen after a successful behavioral pilot,
+with 40 ladders, a locked
+confirmation split, revised behavioral targets, variable prespecified
+generation counts, three independent judges, text-leakage controls, and
+activation-over-text incremental analysis. It predicts prompt-conditioned
+response behavior rather than claiming a prompt-independent willingness
+variable. The full Round 2 generation is authorized against the frozen
+protocol. See:
+
+- `docs/round_1_report.md`
+- `docs/round_2_audit_response.md`
+- `docs/round_2_freeze_manifest.json`
+- `docs/round_2_pilot_report.md`
+- `docs/round_2_protocol.md`
+- `docs/round_2_workflow.md`
+
 ## What is included
 
 - 24 prompts: 6 matched ladders × 4 rungs
@@ -25,27 +41,55 @@ studying further.
 willingness-probe/
   data/
     ladders.jsonl
+    round2_ladders.jsonl
+    round2_pilot_prompts.jsonl
+    round2_prompt_audit.json
     judge_scores.example.jsonl
+  docs/
+    round_1_report.md
+    round_2_audit_response.md
+    round_2_freeze_manifest.json
+    round_2_pilot_report.md
+    round_2_protocol.md
+    round_2_workflow.md
   scoring/
+    JUDGING_WORKFLOW.md
+    batch_judge_prompt.md
     judge_prompt.md
+    round2_batch_judge_prompt.md
+    round2_prompt_annotation_prompt.md
   src/
+    aggregate_judging.py
+    aggregate_prompt_annotations.py
+    analyze_round2.py
+    audit_round2_prompts.py
+    build_round2_dataset.py
+    check_round2_pilot.py
     generation_utils.py
     generate.py
     analyze.py
+    prepare_prompt_annotations.py
+    prepare_judging.py
+    scoring_schema.py
+    text_features.py
   results/
   tests/
     make_smoke_fixture.py
     test_generation_utils.py
+    test_judging_pipeline.py
+    test_round2_pipeline.py
   requirements.txt
   README.md
 ```
 
 ## Local checks
 
-The stopping-token regression test does not download or load Gemma:
+The regression tests do not download or load Gemma:
 
 ```bash
-python -m unittest tests/test_generation_utils.py
+python src/build_round2_dataset.py
+python src/audit_round2_prompts.py
+python -m unittest discover -s tests -v
 ```
 
 To exercise the complete analysis path with tiny synthetic activations:
@@ -129,22 +173,31 @@ The activation file stores float16 arrays shaped:
 
 ### 4. Score the responses
 
-Open `scoring/judge_prompt.md`. For each response:
+The recommended workflow uses two judge models, three independently ordered
+passes per judge, opaque case IDs, and automatic within- and cross-judge
+disagreement checks.
 
-1. Replace the two placeholders with the original prompt and generated response.
-2. Submit it independently to two frontier models.
-3. Save each returned JSON object as one line in:
-   - `results/run_main/judge_1.jsonl`
-   - `results/run_main/judge_2.jsonl`
-4. Add `prompt_id` and `generation_id` to every object.
+Prepare the six blinded packets:
 
-Use `data/judge_scores.example.jsonl` as the exact file-shape example. Do not
-show judges the ladder category, ladder ID, or rung number.
+```bash
+python src/prepare_judging.py \
+    --responses results/run_main/responses.jsonl \
+    --output-dir results/run_main/judging
+```
 
-The analysis averages the two judges. If any category differs by more than one
-point, it emits a disagreement file for manual review. A corrected score can be
-supplied in an optional `results/run_main/manual_scores.jsonl` file using the
-same columns; manual values replace judge averages only for fields provided.
+Give each packet to its assigned model in a fresh conversation using
+`scoring/batch_judge_prompt.md`, save the six raw outputs, and aggregate them:
+
+```bash
+python src/aggregate_judging.py \
+    --mapping results/run_main/judging/private_mapping.jsonl \
+    --raw-scores-dir results/run_main/judging/raw_scores \
+    --output-dir results/run_main/judging/aggregated
+```
+
+Follow `scoring/JUDGING_WORKFLOW.md` for exact collection, validation,
+within-judge adjudication, and cross-judge adjudication steps. The private
+mapping and all experimental metadata must remain hidden from judges.
 
 ### 5. Fit and evaluate the probes
 
@@ -154,8 +207,10 @@ same columns; manual values replace judge averages only for fields provided.
     --responses results/run_main/responses.jsonl \
     --activations results/run_main/activations.npz \
     --run-config results/run_main/run_config.json \
-    --judge-files results/run_main/judge_1.jsonl results/run_main/judge_2.jsonl \
-    --manual-scores results/run_main/manual_scores.jsonl \
+    --judge-files \
+      results/run_main/judging/aggregated/judge_1.jsonl \
+      results/run_main/judging/aggregated/judge_2.jsonl \
+    --manual-scores results/run_main/judging/aggregated/manual_scores.jsonl \
     --output-dir results/run_main/analysis
 ```
 
@@ -168,7 +223,7 @@ Main outputs:
 - `best_layer_summary.json`: the strongest real-label layer
 - `judge_disagreements.csv`: cases needing manual review
 - `generation_diagnostics.json`: token-cap rates by prompt and category
-- `probe_curve.png`: engagement probe versus both baselines
+- `probe_curve.png`: engagement probe versus all sensitivity baselines
 
 The primary metric is held-out Spearman correlation. The plot compares the
 activation probe with shuffled labels, response length, and token-cap rate.

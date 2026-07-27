@@ -42,3 +42,24 @@ def infer_finish_reason(
     if token_count >= max_new_tokens:
         return "length"
     return "other"
+
+
+def resolve_generation_counts(
+    prompts: list[dict],
+    default_count: int,
+    count_field: str | None,
+) -> list[int]:
+    """Resolve a prespecified generation count for every prompt."""
+    if default_count < 1:
+        raise ValueError("default generation count must be at least 1")
+    counts: list[int] = []
+    for row_number, prompt in enumerate(prompts, start=1):
+        value = default_count if count_field is None else prompt.get(count_field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+            prompt_id = prompt.get("prompt_id", f"row {row_number}")
+            raise ValueError(
+                f"{prompt_id} {count_field or 'generation count'} must be "
+                "an integer of at least 1"
+            )
+        counts.append(value)
+    return counts

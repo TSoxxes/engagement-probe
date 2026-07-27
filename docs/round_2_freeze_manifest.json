@@ -1,0 +1,36 @@
+{
+  "protocol": "round2",
+  "protocol_version": "0.3",
+  "status": "frozen",
+  "frozen_on": "2026-07-26",
+  "pilot_report": "docs/round_2_pilot_report.md",
+  "dataset": {
+    "path": "data/round2_ladders.jsonl",
+    "prompts": 160,
+    "ladders": 40,
+    "development_ladders": 30,
+    "confirmation_ladders": 10,
+    "total_generations": 576,
+    "sha256": "5BE7ADEC7D9BE0855B74036A1D0DEF5E25963360AF87B767F284FAE21C336344"
+  },
+  "generation": {
+    "model": "google/gemma-2-2b-it",
+    "num_generations_default": 3,
+    "generation_count_field": "generation_count",
+    "max_new_tokens": 800,
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "base_seed": 20260724
+  },
+  "sha256": {
+    "docs/round_2_protocol.md": "17250BA1ED1993732A5FCC4C16F05F595933CD92B8A438750C28C9F8EC070993",
+    "scoring/round2_batch_judge_prompt.md": "F308D51E1F63F3651F522368BD82B718C42BEEC2A23B88C9290C60EBFEEA4ABD",
+    "scoring/round2_prompt_annotation_prompt.md": "439EDACBECFB8516DAB3ABF0BA235C234DDCE79D505926B2163EE32D5B5C5F51",
+    "src/analyze_round2.py": "A7CA9E8CF6AD862477502F489CAB2FB3702412E58B6F6E7A964D80F5C9F725B4",
+    "src/build_round2_dataset.py": "09D094D49DF67A27CFB33BDA4A9979623F1FBBDBD4ADA063D6EE9D8D61E3F84B",
+    "src/generate.py": "199E5A89ED3178928813CBA5CE671AE505C72634C1478D1A231DACC1A74CE762",
+    "src/scoring_schema.py": "0D1FBA129AFCDDC59A28770B2CF76472E9602EA784558A16D9EBB2CDBE1D4832",
+    "requirements.txt": "BC01F3A68EA21B1B5804DBDA51DDEAA58E948AD9EE26A91B8573A2AD3E5AB7C3"
+  },
+  "change_policy": "Any change to a hashed file requires a new protocol version and a new confirmation set."
+}

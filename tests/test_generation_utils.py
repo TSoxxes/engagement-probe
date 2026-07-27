@@ -11,10 +11,31 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from generation_utils import infer_finish_reason, resolve_eos_token_id
+from generation_utils import (
+    infer_finish_reason,
+    resolve_eos_token_id,
+    resolve_generation_counts,
+)
 
 
 class GenerationUtilsTest(unittest.TestCase):
+    def test_resolve_generation_counts(self) -> None:
+        prompts = [
+            {"prompt_id": "a", "generation_count": 3},
+            {"prompt_id": "b", "generation_count": 6},
+        ]
+        self.assertEqual(
+            resolve_generation_counts(prompts, 3, "generation_count"),
+            [3, 6],
+        )
+        self.assertEqual(resolve_generation_counts(prompts, 4, None), [4, 4])
+        with self.assertRaises(ValueError):
+            resolve_generation_counts(
+                [{"prompt_id": "bad", "generation_count": 0}],
+                3,
+                "generation_count",
+            )
+
     def test_prefers_full_model_generation_stop_list(self) -> None:
         model = SimpleNamespace(
             generation_config=SimpleNamespace(eos_token_id=[1, 107]),
