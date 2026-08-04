@@ -91,9 +91,11 @@ willingness-probe/
 ## Public short-report site
 
 The master short report is `report/willingness_probe_report_v3.html`, and its
-master PDF is `output/pdf/willingness_probe_report.pdf`. The folder
-`public-report-site/` is a separate nested Git repository used only to deploy
-those assets through OpenAI Sites. Do not edit its report copies directly.
+master PDF is `output/pdf/willingness_probe_report.pdf`. The public URL is
+<https://tsoxxes.github.io/willingness-probe-report/>, deployed from the
+separate `TSoxxes/willingness-probe-report` GitHub repository. A local checkout
+of that repository belongs at `public-report-pages/`; do not edit its report
+copies directly.
 
 Synchronize the deployment checkout from the master files with:
 
@@ -102,8 +104,8 @@ python scripts/sync_public_report_site.py
 ```
 
 Use `--check` to verify that the two repositories agree without changing
-files. The full publishing workflow is documented in
-`docs/public_report_publishing.md`.
+files. The sync command refuses to operate on a different Git remote. The full
+publishing workflow is documented in `docs/public_report_publishing.md`.
 
 ## Local checks
 

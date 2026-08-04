@@ -1,22 +1,24 @@
-"""Synchronize canonical report assets into the standalone Sites repository."""
+"""Synchronize canonical report assets into the GitHub Pages repository."""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
 import shutil
+import subprocess
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_REMOTE = "https://github.com/TSoxxes/willingness-probe-report"
 ASSET_PATHS = (
     (
         Path("report/willingness_probe_report_v3.html"),
-        Path("public/report.html"),
+        Path("index.html"),
     ),
     (
         Path("output/pdf/willingness_probe_report.pdf"),
-        Path("public/willingness_probe_report.pdf"),
+        Path("willingness_probe_report.pdf"),
     ),
 )
 
@@ -29,6 +31,17 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
+def normalize_remote(remote: str) -> str:
+    value = remote.strip().lower().removesuffix(".git").rstrip("/")
+    if value.startswith("git@github.com:"):
+        value = "https://github.com/" + value.removeprefix("git@github.com:")
+    if value.startswith("ssh://git@github.com/"):
+        value = "https://github.com/" + value.removeprefix(
+            "ssh://git@github.com/"
+        )
+    return value
+
+
 def validate_site_checkout(site_dir: Path) -> None:
     if not site_dir.is_dir():
         raise FileNotFoundError(
@@ -36,11 +49,24 @@ def validate_site_checkout(site_dir: Path) -> None:
         )
     if not (site_dir / ".git").exists():
         raise ValueError(
-            f"Sites deployment checkout is not a standalone Git repository: {site_dir}"
+            f"Public-report checkout is not a standalone Git repository: {site_dir}"
         )
-    if not (site_dir / ".openai" / "hosting.json").is_file():
+    remote = subprocess.run(
+        ["git", "-C", str(site_dir), "remote", "get-url", "origin"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if remote.returncode != 0:
         raise ValueError(
-            f"Sites project metadata is missing from: {site_dir}"
+            f"Public-report checkout has no readable origin remote: {site_dir}"
+        )
+    actual = normalize_remote(remote.stdout)
+    expected = normalize_remote(EXPECTED_REMOTE)
+    if actual != expected:
+        raise ValueError(
+            "Refusing to synchronize the wrong repository: "
+            f"expected {EXPECTED_REMOTE}, found {remote.stdout.strip()}"
         )
 
 
@@ -83,8 +109,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--site-dir",
         type=Path,
-        default=ROOT / "public-report-site",
-        help="Standalone Sites repository checkout.",
+        default=ROOT / "public-report-pages",
+        help="Standalone GitHub Pages repository checkout.",
     )
     parser.add_argument(
         "--check",

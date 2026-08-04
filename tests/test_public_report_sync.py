@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -9,7 +10,11 @@ from uuid import uuid4
 
 sys.path.insert(0, str(Path(__file__).parents[1] / "scripts"))
 
-from sync_public_report_site import ASSET_PATHS, synchronize  # noqa: E402
+from sync_public_report_site import (  # noqa: E402
+    ASSET_PATHS,
+    EXPECTED_REMOTE,
+    synchronize,
+)
 
 
 TEST_TEMP_ROOT = Path(__file__).parents[1] / ".tmp" / "tests"
@@ -23,10 +28,13 @@ class PublicReportSyncTests(unittest.TestCase):
     def make_workspaces(self, temporary: Path) -> tuple[Path, Path]:
         root = Path(temporary) / "research"
         site = Path(temporary) / "site"
-        (site / ".git").mkdir(parents=True)
-        (site / ".openai").mkdir()
-        (site / ".openai" / "hosting.json").write_text(
-            '{"project_id":"existing-project"}\n', encoding="utf-8"
+        subprocess.run(
+            ["git", "init", str(site)], check=True, capture_output=True
+        )
+        subprocess.run(
+            ["git", "-C", str(site), "remote", "add", "origin", EXPECTED_REMOTE],
+            check=True,
+            capture_output=True,
         )
         for source_relative, _ in ASSET_PATHS:
             source = root / source_relative
@@ -52,6 +60,24 @@ class PublicReportSyncTests(unittest.TestCase):
         destination = site / ASSET_PATHS[0][1]
         destination.write_text("drift", encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "out of sync"):
+            synchronize(root, site, check=True)
+
+    def test_rejects_wrong_deployment_repository(self) -> None:
+        root, site = self.make_workspaces(self.make_temporary_directory())
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(site),
+                "remote",
+                "set-url",
+                "origin",
+                "https://example.com/wrong",
+            ],
+            check=True,
+            capture_output=True,
+        )
+        with self.assertRaisesRegex(ValueError, "wrong repository"):
             synchronize(root, site, check=True)
 
 

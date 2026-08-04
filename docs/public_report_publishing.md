@@ -7,15 +7,16 @@ The research repository owns the authoritative report assets:
 - `report/willingness_probe_report_v3.html`
 - `output/pdf/willingness_probe_report.pdf`
 
-`public-report-site/` is a separate nested Git repository connected to the
-existing OpenAI Sites project. The outer repository ignores that directory so
-the two Git histories do not overlap. Keeping the existing Sites project ID
-preserves the report's existing URL when a new version is deployed.
+The public report is hosted through GitHub Pages at
+<https://tsoxxes.github.io/willingness-probe-report/>. Its source is the
+separate `TSoxxes/willingness-probe-report` repository. A local checkout may be
+placed at `public-report-pages/`; the outer repository ignores that directory
+so the two Git histories do not overlap.
 
 The files below are deployment copies and must not be edited directly:
 
-- `public-report-site/public/report.html`
-- `public-report-site/public/willingness_probe_report.pdf`
+- `public-report-pages/index.html`
+- `public-report-pages/willingness_probe_report.pdf`
 
 ## Update workflow
 
@@ -33,10 +34,10 @@ The files below are deployment copies and must not be edited directly:
    python scripts/sync_public_report_site.py --check
    ```
 
-5. Build and test from `public-report-site/`.
-6. Commit the deployment repository separately and deploy a new version to the
-   project ID already stored in `public-report-site/.openai/hosting.json`.
+5. Review the deployment-repository diff and verify its links locally.
+6. Commit and push the deployment repository's `main` branch. GitHub Pages then
+   updates the existing public URL without changing it.
 
-The sync command fails clearly when the deployment checkout is missing or when
-its Sites project metadata is absent. Use `--site-dir` if the standalone site
-repository is checked out somewhere else.
+The sync command fails clearly when the deployment checkout is missing or its
+`origin` remote is not `TSoxxes/willingness-probe-report`. Use `--site-dir` if
+the standalone repository is checked out somewhere else.
