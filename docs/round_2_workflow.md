@@ -221,7 +221,8 @@ replace `null` values with adjudicated scores, and save the result as
 python src/prepare_prompt_annotations.py `
   --dataset data/round2_ladders.jsonl `
   --output-dir "$run/prompt_annotations" `
-  --judges 3
+  --judges 3 `
+  --batch-size 40
 ```
 
 Use `scoring/round2_prompt_annotation_prompt.md`, saving outputs as:
@@ -231,6 +232,13 @@ prompt_annotations/raw_scores/judge_1.jsonl
 prompt_annotations/raw_scores/judge_2.jsonl
 prompt_annotations/raw_scores/judge_3.jsonl
 ```
+
+The full packets remain under `packets/judge_1.jsonl` through
+`packets/judge_3.jsonl`. For web-chat judges, use the four 40-prompt files per
+judge under `packets/batches/`, then concatenate that judge's four returned
+JSONL batches in batch-number order into the single `raw_scores/judge_N.jsonl`
+file shown above. The case IDs preserve the correct mapping even if a web chat
+reorders its output.
 
 Aggregate:
 

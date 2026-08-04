@@ -1,6 +1,6 @@
 # Willingness Probe project roadmap
 
-Status updated: 2026-07-27
+Status updated: 2026-08-03
 
 ## Project objective
 
@@ -40,6 +40,23 @@ See `docs/round_1_report.md`.
   audit.
 - Ran a separate 48-response behavioral pilot and clarified the judging rubric.
 - Froze protocol 0.3, dataset hashes, generation settings, and analysis code.
+- Completed the frozen 576-generation Kaggle run and preserved responses,
+  activations, configuration, and run provenance.
+- Completed three-model blinded response judging: 1,728 judge-case ratings in
+  total, followed by manual adjudication of all 209 flagged responses.
+- Recorded one narrow judge-model deviation: Opus 4.6 scored one case that the
+  assigned Opus 4.8 web product refused to classify. That case received
+  mandatory manual review and is designated for an exclusion sensitivity
+  check.
+- Completed three-model prompt-harmfulness annotation and adjudication.
+- Completed the locked development/confirmation analysis. The activation probe
+  achieved confirmation Spearman 0.868 versus 0.822 for sparse prompt text, but
+  the +0.046 difference had a ladder-bootstrap interval crossing zero and did
+  not pass the preregistered primary rule.
+- Completed a separately specified post-hoc repeated-split sensitivity analysis.
+  All 200 alternative splits favored activations; the median advantage was
+  +0.077, and the original result was at the 16.5th percentile. This supports
+  split stability but does not replace the frozen primary result.
 
 The B manipulation met its prespecified acceptance threshold exactly, without
 margin. Round 2 remains valid for its frozen activation-over-text question, but
@@ -52,12 +69,11 @@ See:
 - `docs/round_2_pilot_report.md`
 - `docs/round_2_freeze_manifest.json`
 
-## Current milestone: execute frozen Round 2
+## Current milestone: finish the public Round 2 report and prepare the next preregistration
 
-### 1. Main generation
+### 1. Main generation — complete
 
-Run the frozen 576-generation Kaggle job using
-`docs/round_2_workflow.md`. Preserve:
+The frozen 576-generation Kaggle job is complete. Preserve:
 
 - `responses.jsonl`
 - `activations.npz`
@@ -66,33 +82,43 @@ Run the frozen 576-generation Kaggle job using
 
 Do not change a hashed file, prompt, split, generation count, or model setting.
 
-### 2. Pre-judging diagnostics
+### 2. Pre-judging diagnostics — complete
 
-Before committing the full judge-API budget:
+The exploratory diagnostic was completed before full judging and is recorded
+under `results/round2_main/prejudge_diagnostic/`. It was used for resource
+planning, not as a gate or modification to frozen Round 2.
 
-- plot engagement, explicit refusal, and withholding jointly for the 48 Round 2
-  pilot responses;
-- analyze the 96 Round 1 responses separately using its legacy
-  `direct_refusal` score;
-- do not pool the two rounds unless Round 1 is rescored under the seven-axis
-  Round 2 rubric; and
-- estimate the judge-token and dollar budget using the actual Round 2 response
-  lengths.
+### 3. Response judging and adjudication — complete
 
-These are exploratory resource-planning diagnostics, not gates on frozen
-Round 2.
+- Three independent web-chat judge families each scored all 576 responses.
+- All raw ratings, mappings, source transcripts, and provenance are preserved
+  under `results/round2_main/run_round2/judging_web/`.
+- Every response dimension with a cross-judge range greater than one point was
+  manually reviewed. The finalized scores are in
+  `judging_web/aggregated/manual_scores.jsonl`.
 
-### 3. Judging and confirmatory analysis
+### 4. Prompt-only annotation — complete
 
-- Use three different judge models with one blinded pass each.
-- Lock model versions, prompts, and settings before scoring.
-- Either score everything in one locked collection while keeping confirmation
-  outputs sealed, or stage by development/confirmation split.
-- Never use shuffled packet batch order as a substitute for the dataset split.
-- Apply only the written adjudication rules.
-- Run the frozen development selection and one-time confirmation analysis.
+Three blinded judge families scored all 160 prompts for harmfulness without
+seeing model responses. Six prompts were flagged and adjudicated; none remained
+unresolved. Artifacts are preserved under
+`results/round2_main/run_round2/prompt_annotations/`.
 
-### 4. Round 2 deliverables
+### 5. Locked confirmatory analysis — complete
+
+The one-time confirmation analysis was run exactly as specified in
+`docs/round_2_workflow.md`. The preregistered Spearman decision rule was not met;
+Pearson, absolute error, condition-adjusted, and repeated-split diagnostics
+favored activations. Confirmatory and post-hoc results remain explicitly
+separated.
+
+The repeated-split procedure and results are documented in:
+
+- `docs/round2_repeated_split_sensitivity_spec.md`
+- `docs/round2_repeated_split_sensitivity_report.md`
+- `results/round2_main/run_round2/analysis/repeated_split_sensitivity/`
+
+### 6. Round 2 deliverables — in final review
 
 - A concise technical report with the preregistered primary result
 - Development and confirmation metrics with uncertainty
@@ -101,6 +127,10 @@ Round 2.
   dependence, and model-scale limits
 - A small, privacy-checked result package containing derived tables, figures,
   run configuration, and provenance hashes
+
+The technical summary is in `docs/round_2_results_summary.md`. The public HTML
+report is undergoing final wording review before the revision markings are
+removed.
 
 ## Parallel exploratory track: behavioral-cell diagnostic
 
@@ -123,7 +153,11 @@ Round 3 should be separately preregistered after Round 2 results are known.
 
 ### Causal harness
 
-- Reproduce a published refusal-steering effect as a positive control.
+- Pilot a published refusal-direction procedure on the same open-weight model
+  selected for the causal follow-up. Reproduce existing results when they cover
+  the exact checkpoint; otherwise derive the direction on that model using the
+  published procedure. Require the expected refusal change on separate held-out
+  prompts before proceeding to the engagement intervention.
 - Include a matched-magnitude random-direction negative control.
 - Separate the best predictive probe from the steering direction.
 - Run a dose-response sweep with fixed scoring and stopping rules.
@@ -132,10 +166,38 @@ Round 3 should be separately preregistered after Round 2 results are known.
 
 No operationally harmful generations should be released.
 
+### Stable prediction and evaluation
+
+- Keep a locked confirmation set as the primary test.
+- Use more than 40 semantic ladders, prioritizing a larger independent
+  confirmation set. Set the exact count prospectively from power analysis and
+  the scoring and compute budget.
+- Preregister grouped repeated-split analysis as a supporting robustness check,
+  rebuilding both fitted predictors within every development split.
+- Use a separate pilot with different semantic ladders to evaluate every layer
+  of a new model. Before examining the pilot results, specify the band width and
+  a rule for finding a contiguous region that remains strong across grouped
+  pilot resamples. Freeze the selected layers and averaging rule before the
+  main study, and use that neighboring-layer average as the primary
+  representation. Treat a regularized combination of a few widely separated
+  layers as a prespecified secondary comparison; it cannot be promoted to the
+  primary result after outcomes are known. In the Round 2 sensitivity analysis,
+  layer 25 was chosen in only 28 of 200 splits, while layer 18 was chosen in 60.
+- Compare a prompt-only predictor with an augmented predictor that uses
+  activations to predict what the prompt-only estimate misses. Use the
+  augmented-minus-prompt-only ranking improvement after accounting for broad
+  prompt type as the single primary endpoint; retain pooled and per-type results
+  and an activation-only linear probe as prespecified secondary analyses.
+
 ### Stronger ground truth
 
-For claims about "will not" versus "cannot," use tasks with externally
-established capability:
+For claims about "will not" versus "cannot," first run a separate capability
+pilot. Use safe, fully specified tasks with objective answer keys, repeat them,
+and retain only tasks the model solves reliably. The main study can then use
+matched variants that introduce missing information, an impossible action, or
+a safety constraint while preserving the underlying knowledge or skill. For
+safety cases, verify that skill with a benign matched task. Other possible
+capability controls include:
 
 - known-answer or known-capability task sets;
 - controlled system-prompt underperformance;
@@ -189,8 +251,8 @@ Links verified on 2026-07-27.
 The first request should fund a specific bottleneck rather than general project
 support:
 
-1. three-model API judging for Round 2;
-2. prompt annotation and any required blinded adjudication calls;
+1. three-model API judging for the next controlled prompt set;
+2. checklist drafting, prompt annotation, and independent LLM adjudication;
 3. a small 7–9B cross-model pilot;
 4. limited compute/API costs for the positive-control steering harness; and
 5. result hosting or research tooling if directly required.
@@ -216,4 +278,6 @@ Round 2's hashed protocol artifacts remain frozen. New diagnostics,
 documentation, automation, or future protocols may be added, but changing a
 hashed Round 2 file requires a new protocol version and a new confirmation set.
 
-The immediate priority is execution, not another redesign.
+The immediate priority is finishing the clean public report, then freezing the
+next study's prompt set, checklist rubric, predictor comparison, split-stability
+analysis, and intervention controls before new data are generated.

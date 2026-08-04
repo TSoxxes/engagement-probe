@@ -5,3 +5,7 @@ results/*
 tests/smoke_fixture/
 tests/smoke_output/
 tests/judging_test_workspace/
+.tmp/
+public-report-site/
+report/willingness_probe_report.html
+report/willingness_probe_report_v2.html
