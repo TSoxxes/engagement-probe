@@ -6,6 +6,9 @@ tests/smoke_fixture/
 tests/smoke_output/
 tests/judging_test_workspace/
 .tmp/
+# Standalone nested Git repository used by OpenAI Sites for deployment.
+# Canonical report assets live in report/ and output/pdf/; see
+# docs/public_report_publishing.md for the synchronization workflow.
 public-report-site/
 report/willingness_probe_report.html
 report/willingness_probe_report_v2.html
