@@ -463,9 +463,17 @@ that much of the engagement ordering overlaps refusal-related behavior.
 - Excluding prompts with any capped generation left confirmation performance
   nearly unchanged: Spearman 0.864, Pearson 0.946, and MAE 0.291 over 38
   prompts.
-- Average response length was predictive but weaker than the activation probe:
-  Spearman 0.766, Pearson 0.910, and MAE 0.367. Response length is also a
-  post-answer measurement, not a pre-answer alternative.
+- Thirteen of forty confirmation prompts scored exactly 3.0, including all ten
+  condition A prompts. The engagement scale therefore has no resolution among
+  fully engaged answers, and confirmation rank performance is carried by the
+  lower-scoring conditions.
+- Average observed response length strongly predicted engagement on
+  confirmation: Spearman 0.766, Pearson 0.910, and MAE 0.367. Because length is
+  observed only after generation, it is not an operational pre-answer
+  competitor to the probe. It is, however, a live alternative explanation of
+  what the activations encode, since the pre-answer representation may carry an
+  expected response budget. Post-hoc diagnostics bearing on this appear in the
+  response-length appendix.
 - All 160 saved final-prompt token IDs were the common generation-boundary token
   108, and the index-0 embedding representation was identical across prompts.
   Prompt information emerged only after transformer processing, which is a
@@ -523,7 +531,14 @@ conclusive discovery of a standalone willingness representation.
    safety-related scoring task. External review found that this development
    case has negligible influence, but the sensitivity should be reproduced by
    repository code and saved before being treated as closed.
-10. Prediction does not establish causal influence. An intervention study would
+10. The analysis did not separate engagement from planned response length. The
+    prespecified length baseline tested observed length as a predictor of
+    engagement; it did not test whether activations themselves encode expected
+    length, nor whether engagement remains predictable after length adjustment.
+    The post-hoc appendix addresses both, but observed length is measured after
+    generation and may be a mediator of engagement rather than a nuisance, so
+    those diagnostics bracket the question rather than resolve it.
+11. Prediction does not establish causal influence. An intervention study would
     be needed to test whether changing the representation changes engagement.
 
 ## Round 3 implications
@@ -558,6 +573,15 @@ retroactive change to Round 2:
    replication.
 7. Preserve a separate causal-intervention track; predictive probes alone do
    not establish that the decoded direction controls behavior.
+8. Manipulate response length directly rather than only adjusting for it.
+   Generate matched prompts under prespecified short and longer target ranges
+   using a concision instruction plus an appropriate cap, since a cap alone
+   does not produce matched lengths when responses end early. Score frozen
+   core-item coverage, optional detail, and coverage per token. Test whether
+   activation predictions track substantive coverage when length is held
+   approximately constant, and whether they remain stable when requested length
+   changes but coverage does not. Statistical adjustment cannot separate a
+   length nuisance from a length mediator; only manipulation can.
 
 ## Recommended external-review questions
 
@@ -577,6 +601,101 @@ An external reviewer should be asked to address:
 7. Which sensitivity analyses or figures are still needed before a public
    report or grant application?
 
+## Appendix: post-hoc response-length diagnostics
+
+Everything in this appendix is post-hoc. None of it was prespecified in the
+frozen protocol, none of it changes the primary result, and it was produced
+from the existing frozen artifacts without new generation or judging. It is
+reproducible through `src/analyze_round2_length.py`, whose outputs are saved
+under `results/round2_main/run_round2/analysis/length_diagnostics/`. The module
+recomputes the frozen primary-layer predictions and aborts if they differ from
+`confirmation_predictions.csv`; observed agreement was 1.3e-15.
+
+The motivating question is whether the probe reads how much substantive help
+the model will provide, or how long an answer it is preparing to produce.
+
+All intervals are 95% ladder bootstraps over 10,000 resamples of the ten
+confirmation ladders. They cover evaluation-ladder resampling only, not model
+fitting or layer selection, and with ten independent ladders they are wide.
+
+| Diagnostic | Confirmation Spearman [95%] |
+|---|---|
+| Observed length predicting engagement | 0.766 [0.688, 0.851] |
+| Activations predicting length, frozen index 25 | 0.883 [0.734, 0.957] |
+| Activations predicting length, development-selected index 24 | 0.883 [0.733, 0.956] |
+| Engagement-probe predictions versus length | 0.662 [0.537, 0.761] |
+| Engagement after raw-length adjustment, frozen index 25 | 0.755 [0.512, 0.874] |
+| Engagement after raw-length adjustment, residual-selected index 18 | 0.644 [0.329, 0.817] |
+| Engagement after rank-based adjustment, frozen index 25 | 0.632 [0.314, 0.820] |
+| Engagement after rank-based adjustment, residual-selected index 18 | 0.545 [0.218, 0.747] |
+| Within-condition length and engagement, confirmation centering | 0.755 [0.622, 0.869] |
+| Within-condition length and engagement, development-estimated | 0.708 [0.545, 0.845] |
+
+Five points govern how these numbers should be read.
+
+**Activation-to-length decoding is a collinearity diagnostic, not evidence of a
+planned-length representation.** Length and engagement correlate at 0.766
+Spearman and 0.910 Pearson on confirmation, so a representation that predicts
+one will largely predict the other. The layer sweep for length selects index
+24, whose confirmation performance is indistinguishable from the frozen
+engagement index 25. There is no separable length code to point to.
+
+**The adjusted results are sensitivity analyses, not length-corrected
+estimates.** Length admits two incompatible readings. Under the nuisance
+reading, activations encode expected verbosity and verbosity inflates judged
+engagement. Under the mediator reading, a genuine intention to engage produces
+both more substantive content and a longer answer. Observed length cannot
+distinguish them, and under the mediator reading the adjustment removes part of
+the construct being measured. The residual figures therefore bracket
+interpretations rather than correcting the estimate.
+
+**The frozen-index result should lead its pair.** Index 18 was selected by
+sweeping the residual target on development, so it is a post-hoc selection. At
+the preregistered index 25 the raw-length-adjusted result is stronger, at 0.755.
+Raw length is the principal adjustment because it has the stronger linear
+association with engagement, at Pearson 0.910 raw against 0.759 for
+log-length on confirmation, and 0.760 against 0.562 on development. The
+rank-based adjustment is a robustness check, and it lowers the estimate. The
+signal survives every adjustment attempted, but its magnitude is not pinned
+down.
+
+**The fixed-engagement subgroup check did not fire, and had little power to.**
+All ten confirmation condition A prompts score exactly 3.0 while their mean
+response lengths span 586 to 723 tokens, so engagement is held fixed by the
+rubric while length varies. A global length detector should still track length
+there. The engagement probe's predictions do not, but the interval spans zero.
+
+| Condition | Prompts | Engagement SD | Length range | Prediction versus length [95%] |
+|---|---:|---:|---:|---|
+| A | 10 | 0.000 | 586–723 | −0.309 [−0.888, 0.484] |
+| B | 10 | 0.912 | 181–799 | 0.784 [0.300, 0.962] |
+| C | 10 | 0.487 | 10–276 | 0.394 [−0.296, 0.748] |
+| D capability | 5 | 0.130 | 159–305 | −0.700 [−1.000, 0.875] |
+| D harmful request | 5 | 1.318 | 221–694 | 0.100 [−1.000, 1.000] |
+
+This is a falsification check that did not fire, not evidence of absence. It is
+also not a matched-length experiment: engagement is held constant while length
+varies, rather than the reverse. It cannot rule out nonlinear or
+condition-specific length dependence. In the two five-prompt D subgroups some
+bootstrap resamples leave one variable constant and carry no rank information;
+those resamples are dropped and counted rather than scored as zero, which would
+pull the intervals toward the null. Nineteen of 10,000 were dropped for D
+capability and sixteen for D harmful request.
+
+**Length is not merely a proxy for design condition.** Design condition
+explains 64.8% of confirmation length variance, but after removing
+confirmation-set condition means length and engagement still associate at 0.755
+Spearman and 0.846 Pearson. Carrying development-estimated condition effects
+into confirmation, which better preserves the held-out logic, gives 0.708 and
+0.834. Length carries information about engagement beyond the coarse condition,
+so it cannot be dismissed as a condition proxy. This is the counterweight to
+the subgroup result above.
+
+Taken together, the probe is not merely a length detector, but this study
+cannot say how much of what it decodes is substantive engagement rather than
+planned length. Resolving that requires the length manipulation described in
+the Round 3 implications, not further reanalysis of these artifacts.
+
 ## Source artifacts
 
 - `docs/round_1_report.md`
@@ -592,6 +711,11 @@ An external reviewer should be asked to address:
 - `results/round2_main/run_round2/analysis/cross_target_confirmation.csv`
 - `results/round2_main/run_round2/analysis/posthoc_review_summary.json`
 - `results/round2_main/run_round2/analysis/posthoc_confirmation_metrics_by_layer.csv`
+- `src/analyze_round2_length.py`
+- `results/round2_main/run_round2/analysis/length_diagnostics/round2_length_diagnostics.json`
+- `results/round2_main/run_round2/analysis/length_diagnostics/length_subgroup_diagnostics.csv`
+- `results/round2_main/run_round2/analysis/length_diagnostics/length_decoding_by_layer.csv`
+- `results/round2_main/run_round2/analysis/length_diagnostics/length_confirmation_values.csv`
 - `docs/round2_repeated_split_sensitivity_spec.md`
 - `docs/round2_repeated_split_sensitivity_report.md`
 - `results/round2_main/run_round2/analysis/repeated_split_sensitivity/summary.json`
