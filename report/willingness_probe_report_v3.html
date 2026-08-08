@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A public-facing short report on the Willingness Probe research project.">
+  <meta name="description" content="A public-facing short report on the Engagement Probe research project.">
   <link rel="canonical" href="https://tsoxxes.github.io/willingness-probe-report/">
   <meta property="og:title" content="Predicting How Fully an AI Will Answer From Its Internal State">
-  <meta property="og:description" content="A public-facing report on the Willingness Probe research project.">
+  <meta property="og:description" content="A public-facing report on the Engagement Probe research project.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://tsoxxes.github.io/willingness-probe-report/">
   <meta property="og:image" content="https://tsoxxes.github.io/willingness-probe-report/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Willingness Probe — Short Research Report</title>
+  <title>Engagement Probe — Short Research Report</title>
   <style>
     :root {
       --paper: #f4f0e7;
@@ -1792,7 +1792,7 @@
   <main>
     <section class="page-shell hero" aria-labelledby="report-title">
       <div>
-        <p class="eyebrow">Willingness Probe</p>
+        <p class="eyebrow">Engagement Probe</p>
         <h1 id="report-title">Can we predict how fully an AI will answer before it says a word?</h1>
         <p class="hero-copy">Previous work has identified internal activation patterns tied to refusal and other high-level model behaviors, while behavioral evaluations have documented over-refusal on harmless prompts.<sup class="citation"><a href="#ref-1" aria-label="Reference 1">1</a>,<a href="#ref-2" aria-label="Reference 2">2</a>,<a href="#ref-3" aria-label="Reference 3">3</a></sup> This project asks a related but different question: before an answer begins, do the model’s internal activations predict how completely it will address the user’s request—including cases where it never explicitly refuses?</p>
       </div>
@@ -2268,7 +2268,7 @@
             </article>
           </div>
 
-          <p class="closing-statement">On held-out prompts, Gemma’s internal state produced the best observed prediction of how fully it would answer, ahead of predictors using only prompt wording or prompt type. But the primary comparison did not meet our committed success rule, and the design did not experimentally separate refusal, missing information, and capability limits. We therefore cannot yet claim that this is a distinct “willingness to engage” signal.</p>
+          <p class="closing-statement">On held-out prompts, Gemma’s internal state produced the best observed prediction of how fully it would answer, ahead of predictors using only prompt wording or prompt type. But the primary comparison did not meet our committed success rule, and the design did not experimentally separate refusal, missing information, and capability limits. We therefore cannot yet claim that this is a distinct internal engagement signal.</p>
         </div>
       </div>
     </section>
@@ -2315,7 +2315,7 @@
           <dl class="next-list">
             <div class="next-row">
               <dt>Telling “won’t answer” from “can’t answer”</dt>
-              <dd><strong>Build semantic ladders around capabilities the model has already demonstrated.</strong> In a separate pilot, give the model safe, fully specified prompts with objectively checkable answers and score them against an answer key. Keep only prompt families the model answers reliably across several attempts. The later ladders can then introduce missing information, an impossible action, or a safety constraint while preserving the underlying knowledge or skill. For safety prompts, a benign matched prompt would first verify the same technical skill without requesting harmful assistance. This would not prove that every thin answer reflects unwillingness, but it would make simple inability less plausible.</dd>
+              <dd><strong>Build semantic ladders around capabilities the model has already demonstrated.</strong> In a separate pilot, give the model safe, fully specified prompts with objectively checkable answers and score them against an answer key. Keep only prompt families the model answers reliably across several attempts. The later ladders can then introduce missing information, an impossible action, or a safety constraint while preserving the underlying knowledge or skill. For safety prompts, a benign matched prompt would first verify the same technical skill without requesting harmful assistance. This would not prove that every thin answer reflects a decision not to engage, but it would make simple inability less plausible.</dd>
             </div>
             <div class="next-row">
               <dt>Moving from reading to changing</dt>
@@ -2354,7 +2354,7 @@
       </ol>
     </section>
 
-    <footer class="page-shell intro-end">Willingness Probe · Short research report · 2026</footer>
+    <footer class="page-shell intro-end">Engagement Probe · Short research report · 2026</footer>
   </main>
 </body>
 </html>

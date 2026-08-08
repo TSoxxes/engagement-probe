@@ -1,4 +1,4 @@
-# Willingness Probe: Round 1 and Round 2 results summary
+# Engagement Probe: Round 1 and Round 2 results summary
 
 Status: primary analysis completed 2026-07-31; repeated-split sensitivity
 analysis completed 2026-08-02; technical write-up in progress.
@@ -53,11 +53,11 @@ robust across many layers.
 The study supports a predictive, prompt-conditioned claim. It does not yet
 establish:
 
-- a universal or model-independent "willingness" representation;
+- a universal or model-independent engagement representation;
 - a causal mechanism that controls engagement;
 - a representation that is independent of prompt wording, topic, refusal, or
   information withholding; or
-- a reliable distinction between inability and unwillingness.
+- a reliable distinction between inability and a decision not to engage.
 
 ## What was measured
 
@@ -502,7 +502,7 @@ the development-defined residual comparison provides strong post-hoc evidence
 of an activation advantage beyond coarse condition. The primary result should
 be described as inconclusive under the preregistered rule, accompanied by
 strong supporting and exploratory diagnostics—not as either a null result or a
-conclusive discovery of a standalone willingness representation.
+conclusive discovery of a standalone engagement representation.
 
 ## Important limitations
 
