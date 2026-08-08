@@ -9,7 +9,5 @@ tests/judging_test_workspace/
 # Local checkout of the separate GitHub Pages repository. Canonical report
 # assets live in report/ and output/pdf/; see docs/public_report_publishing.md.
 public-report-pages/
-# Legacy OpenAI Sites checkout. It is not the public-report deployment target.
-public-report-site/
 report/willingness_probe_report.html
 report/willingness_probe_report_v2.html
