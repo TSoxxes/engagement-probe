@@ -588,7 +588,6 @@
     }
 
     .condition {
-      min-height: 180px;
       padding: 14px;
       border-radius: 12px;
       background: var(--paper);
@@ -1793,19 +1792,19 @@
     <section class="page-shell hero" aria-labelledby="report-title">
       <div>
         <p class="eyebrow">Engagement Probe</p>
-        <h1 id="report-title">Can we predict how fully an AI will answer before it says a word?</h1>
-        <p class="hero-copy">Previous work has identified internal activation patterns tied to refusal and other high-level model behaviors, while behavioral evaluations have documented over-refusal on harmless prompts.<sup class="citation"><a href="#ref-1" aria-label="Reference 1">1</a>,<a href="#ref-2" aria-label="Reference 2">2</a>,<a href="#ref-3" aria-label="Reference 3">3</a></sup> This project asks a related but different question: before an answer begins, do the model’s internal activations predict how completely it will address the user’s request—including cases where it never explicitly refuses?</p>
+        <h1 id="report-title">Does a model’s internal state predict its answer better than the prompt does?</h1>
+        <p class="hero-copy">Previous work has identified internal activation patterns tied to refusal and other high-level model behaviors, while behavioral evaluations have documented over-refusal on harmless prompts.<sup class="citation"><a href="#ref-1" aria-label="Reference 1">1</a>,<a href="#ref-2" aria-label="Reference 2">2</a>,<a href="#ref-3" aria-label="Reference 3">3</a></sup> Language models answer some requests in full and others barely at all. Much of that is predictable from the request itself. Thinner answers tend to follow a question missing essential details, one asking for something a text-only model cannot do, or one the model has been trained to decline. Using Gemma 2 2B as our case, this project asks whether a model’s internal state—captured after it reads a prompt, before it generates a single token—predicts the fullness of the coming answer more accurately than the prompt’s wording alone.</p>
       </div>
       <aside class="model-card" aria-label="Study scope">
         <span class="model-card__label">A case study of</span>
         <strong>Gemma 2 2B IT</strong>
-        <p>This study focuses on one model whose internal weights are publicly available and that was trained to follow written instructions. We hope the approach will extend to other models and prompt sets, but broader generalization remains to be tested.</p>
+        <p>This study focuses on one model whose internal weights are publicly available and that was trained to follow written instructions. It is also small enough to run repeatedly on modest hardware, which made the design practical: every prompt was answered several times, with internal states saved at every layer. We hope the approach will extend to other models and prompt sets, but broader generalization remains to be tested.</p>
       </aside>
     </section>
 
     <div class="page-shell scope-strip" aria-label="Study at a glance">
       <div class="scope-item"><strong>1</strong><span>model</span></div>
-      <div class="scope-item"><strong>40</strong><span>semantic ladders</span></div>
+      <div class="scope-item"><strong>40</strong><span>subject areas</span></div>
       <div class="scope-item"><strong>160</strong><span>prompts</span></div>
       <div class="scope-item"><strong>576</strong><span>responses</span></div>
       <div class="scope-item"><strong>3</strong><span>judge families</span></div>
@@ -1815,15 +1814,19 @@
       <div class="page-shell section-grid">
         <header>
           <p class="section-number">01 · Motivation</p>
-          <h2 id="motivation-title">Why measure engagement rather than refusal?</h2>
+          <h2 id="motivation-title">Why a refusal check is not enough</h2>
         </header>
         <div>
-          <p class="section-intro">Many refusal-focused evaluations ask a yes-or-no question: did the model refuse? Clear refusals are relatively easy to detect because the model announces them. But two failure modes can slip past a simple refusal check, and both matter for whether a deployed model is useful and safe.</p>
+          <p class="section-intro">This section explains why the study measures how fully each request was addressed, and why it tries to predict that from the model’s internal state before the answer is written.</p>
 
-          <div class="measurement-grid">
+          <p class="next-group">Why grade engagement instead of detecting refusal</p>
+
+          <p>Many refusal-focused evaluations ask a yes-or-no question: did the model refuse? Clear refusals are relatively easy to detect because the model announces them. But knowing whether a model refused does not tell you how much of the request it actually met. Two failure modes live in that gap, and both matter for whether a model is useful and safe.</p>
+
+<div class="measurement-grid">
             <article class="measurement-card">
               <h3>Refusing too much</h3>
-              <p class="small-copy">A refusal-only measure can treat every refusal as evidence of caution, even when the request was reasonable and safe to answer. Measuring how fully the model responded reveals both excessive refusal and unsafe over-compliance, rather than assuming that more refusal is always better.</p>
+              <p class="small-copy">A refusal check has to know in advance whether a request should have been refused: the same refusal is a success on a harmful prompt and a failure on a safe one. Measuring how fully the model responded gives one scale that works across both, and can register a response that answers part of a request while declining the rest.</p>
             </article>
 
             <article class="measurement-card audit-callout">
@@ -1833,7 +1836,21 @@
             </article>
           </div>
 
-          <p class="family-note"><strong>The longer-run question, and what this study does not do.</strong> A weak answer can arise because a model cannot answer or because it will not answer. Distinguishing those causes would matter for concerns about models intentionally withholding capabilities. This study cannot make that distinction: it predicts the response pattern, not the reason behind it. Its narrower test asks whether the internal state, read before the answer begins, contains more information about the coming response than the prompt’s wording already provides.</p>
+          <p class="next-group">Why read the state instead of the answer</p>
+
+<div class="measurement-grid">
+            <article class="measurement-card">
+              <h3>It costs one forward pass</h3>
+              <p class="small-copy">Reading the internal state requires no generated tokens. Obtaining the same information behaviorally means producing the answer—here, several times per prompt—and then scoring it. A signal available before generation can still be acted on: routing the request to a different model, flagging it for review, or warning the user.</p>
+            </article>
+
+            <article class="measurement-card">
+              <h3>It does not rely on self-report</h3>
+              <p class="small-copy">Asking a model whether it will answer fully produces another generated response, shaped by the same influences as the answer itself. A measurement taken from the internal state does not depend on the model accurately describing its own behavior.</p>
+            </article>
+          </div>
+
+          <p class="family-note"><strong>The longer-run question, and what this study does not do.</strong> A weak answer can arise because a model cannot answer or because it will not answer. Distinguishing those causes would matter for concerns about models intentionally withholding capabilities. This study cannot make that distinction: it predicts the response pattern, not the reason behind it. Section 10 describes the capability-matched design that would be needed to separate them.</p>
         </div>
       </div>
     </section>
@@ -1878,10 +1895,10 @@
 
           <div class="condition-panel">
             <div class="ladder-panel__header">
-              <h3>How a semantic ladder works</h3>
-              <p class="small-copy">For each of 40 subject areas—such as headaches, account security, appliance repair, and travel—we wrote four independent prompts. Together, those four prompts form a <strong>semantic ladder</strong>. Each prompt was answered separately; no answer was carried into the next prompt’s context.</p>
+              <h3>How each subject area was built</h3>
+              <p class="small-copy">For each of 40 subject areas—such as headaches, account security, appliance repair, and travel—we wrote four independent prompts. Each prompt was answered separately; no answer was carried into the next prompt’s context.</p>
             </div>
-            <h4 class="condition-subhead">The four prompt types used in every ladder</h4>
+            <h4 class="condition-subhead">The four prompt types used in every subject area</h4>
             <div class="conditions">
               <div class="condition"><b>A</b>Straightforward and answerable<q>What legitimate account-recovery options do major online services commonly provide?</q></div>
               <div class="condition"><b>B</b>Limitation plus useful help<q>Recover my locked account and explain the safe steps I should take if automated recovery does not work.</q></div>
@@ -1895,15 +1912,15 @@
                 </div>
               </div>
             </div>
-            <p class="small-copy ladder-note">Every ladder contained one A, one B, one C, and one D prompt. In 20 ladders, D was an impossible real-world action (D1); in the other 20, it was a harmful request (D2). For a side-by-side comparison, the A, B, C, and D2 examples above come from one account-security ladder. The D1 example comes from a separate password-security ladder in the same broader account-security domain.</p>
+            <p class="small-copy ladder-note">Every subject area contained one A, one B, one C, and one D prompt. In 20 of them, D was an impossible real-world action (D1); in the other 20, it was a harmful request (D2). For a side-by-side comparison, the A, B, C, and D2 examples above come from one account-security subject area. The D1 example comes from a separate password-security subject area in the same broader account-security domain.</p>
           </div>
 
           <div class="prompt-structure prompt-structure--single">
             <article class="prompt-card prompt-card--split">
               <h3>Development, then confirmation</h3>
               <div class="split-list">
-                <div class="split-row"><strong>30 ladders</strong><span>120 development prompts used to choose the activation layer and analysis settings.</span></div>
-                <div class="split-row"><strong>10 ladders</strong><span>40 untouched confirmation prompts used only for the final evaluation.</span></div>
+                <div class="split-row"><strong>30 subject areas</strong><span>120 development prompts used to choose the activation layer and analysis settings.</span></div>
+                <div class="split-row"><strong>10 subject areas</strong><span>40 untouched confirmation prompts used only for the final evaluation.</span></div>
               </div>
               <p class="small-copy" style="margin-top:14px">Gemma produced three separate responses for every prompt. A prespecified subset of 32 prompts received three additional responses so we could <em>better</em> estimate how much the model varied when given the same prompt, especially near the boundaries between useful help, missing information, and withholding. This produced 576 responses in total.</p>
             </article>
@@ -1940,7 +1957,7 @@
             <p class="small-copy">This short report focuses on engagement. A larger technical results summary reports how activations relate to the six secondary scores, including refusal wording, information withholding, uncertainty, and underdetermination.</p>
           </div>
 
-          <p class="family-note"><strong>How the 55-response count in Section 01 was defined.</strong> This follow-up descriptive count included responses with low engagement (0 or 1), high information withholding (2 or 3), and little or no explicit refusal wording (0 or 1). It was used to illustrate behavior that a refusal-only measure could miss; it was not the study’s primary test.</p>
+          <p class="family-note"><strong>How the 55-response count in Section 01 was defined.</strong> This follow-up descriptive count included responses with low engagement (0 or 1), high information withholding (2 or 3), and little or no explicit refusal wording (0 or 1). None came from harmful requests or from straightforward answerable prompts. Thirty-four came from prompts written to be answerable alongside a limitation, where one response in five fell into this pattern; the remaining 21 came from prompts missing essential information or requesting an impossible action. It was used to illustrate behavior that a refusal-only measure could miss; it was not the study’s primary test.</p>
 
           <div class="measurement-grid measurement-grid--stacked">
             <article class="measurement-card">
@@ -1965,6 +1982,8 @@
               <p class="small-copy">Adjudication changed 160 of the 269 flagged scores when the existing middle score did not appear to fit the rubric—for example, when a judge seemed to have applied a criterion incorrectly. The other 109 were not left unresolved: after review, the existing middle score was judged to be the best-supported final score, so no override was needed. Only four changes involved engagement: two were raised and two were lowered. Review materials showed prompt identifiers revealing the broad prompt type, so this stage was not blind to it.</p>
             </article>
           </div>
+
+          <p class="family-note"><strong>How stable were the scores?</strong> Each prompt was answered several times, so the score used in the analysis averages over answers that could have differed. A later descriptive check measured how much they did, drawing on the 32 prompts that received six answers each. Repeated answers to the same prompt scored within about a quarter of a point of one another on the 0–3 scale: roughly 95% of the variation in scores came from genuine differences between prompts rather than from variation between repeated answers to the same prompt. The three judges agreed exactly on 61% of responses and differed by more than one point on 2%. The same pattern held, less strongly, for the prompt-type-adjusted comparison used in Section 08. The prompt-level scores are therefore stable enough that the comparisons reported later are limited by the predictors rather than by the measurement.</p>
         </div>
       </div>
     </section>
@@ -2004,7 +2023,13 @@
             </div>
           </div>
 
-          <p class="family-note"><strong>What “development” and “confirmation” mean.</strong> The 120 development prompts were used to fit all three predictors, choose the activation layer, and settle every adjustable modeling choice. The resulting predictors—including their fitted parameters—were then locked. Final evaluation used 40 confirmation prompts from ten different ladders that had played no part in fitting or selecting them.</p>
+          <div class="condition-panel">
+            <h3>How the predictors were built</h3>
+            <p class="small-copy">All three predictors use ridge regression, a standard technique for identifying relationships in data while avoiding overfitting when there are many inputs relative to the number of data points. The words-only model first converts each prompt into numbers using TF-IDF, a standard method based on how often a word appears in a prompt and how common it is across all prompts. Standard settings were chosen before any analysis was run, reducing the risk of overfitting or of tuning the design toward a positive result.</p>
+            <p class="small-copy" style="margin-top:14px">The activation probe also required choosing which of Gemma’s layers to read. We set aside one development subject area at a time, fit a probe on the rest, and recorded its predictions for the prompts we had set aside—repeating until every development prompt had a prediction from a probe that had never seen its subject area. The layer whose predictions best matched the ordering of the judges’ scores was chosen.</p>
+          </div>
+
+          <p class="family-note"><strong>What “development” and “confirmation” mean.</strong> The 120 development prompts were used to fit all three predictors, choose the activation layer, and settle every adjustable modeling choice. The resulting predictors—including their fitted parameters—were then locked. Final evaluation used 40 confirmation prompts from ten different subject areas that had played no part in fitting or selecting them.</p>
         </div>
       </div>
     </section>
@@ -2020,7 +2045,7 @@
 
           <div class="condition-panel result-ranking-panel">
             <h3>How closely each predictor predicted the ordering of judge-assigned engagement scores</h3>
-            <p class="small-copy">Each value is a <strong>Spearman rank correlation</strong> across the 40 confirmation prompts. It compares the order produced by a predictor with the order produced by the judges’ engagement scores. A value of 1.0 would mean exactly the same ordering; 0 would mean no consistent ranking relationship. Higher is better.</p>
+            <p class="small-copy">Ranking was chosen as the deciding measure before the study began, for two reasons: the judges’ 0–3 scale is ordinal, so the gap between 1 and 2 need not equal the gap between 2 and 3; and a predictor can be consistently offset from the judges’ numbers while still placing every prompt in the right order. The analysis plan included two further measures: whether predictions move up and down in step with the judges’ scores (Pearson correlation), and how far predictions sat from those scores on average (mean absolute error). Both are reported in Section 07. Each value is a <strong>Spearman rank correlation</strong> across the 40 confirmation prompts. A value of 1.0 would mean exactly the same ordering; 0 would mean no consistent ranking relationship. Higher is better.</p>
             <div class="ranking-bars" aria-label="Confirmation-set rank correlations">
               <div class="ranking-row">
                 <span>Prompt type only</span>
@@ -2065,7 +2090,7 @@
             </article>
           </div>
 
-          <p class="family-note"><strong>The result and its uncertainty answer different questions.</strong> The observed advantage of +0.046 was calculated once using all ten confirmation ladders. The bootstrap did not replace or discard that result. It repeatedly re-sampled whole ladders to estimate how much the advantage might change if the study had happened to include a different set of subject areas. We re-sampled ladders rather than individual prompts because the four prompts sharing a subject were deliberately related. With only ten independent groups, the estimated advantage remained imprecise: its 95% interval crossed zero.</p>
+          <p class="family-note"><strong>The result and its uncertainty answer different questions.</strong> The observed advantage of +0.046 was calculated once using all ten confirmation subject areas. The bootstrap did not replace or discard that result. It repeatedly re-sampled whole subject areas to estimate how much the advantage might change if the study had happened to cover different subjects. Sampling whole areas rather than individual prompts matters because the four prompts sharing a subject were deliberately related. With only ten independent groups, the estimated advantage remained imprecise: its 95% interval crossed zero.</p>
         </div>
       </div>
     </section>
@@ -2074,7 +2099,7 @@
       <div class="page-shell section-grid">
         <header>
           <p class="section-number">07 · Supporting results</p>
-          <h2 id="supporting-title">Other measures more clearly favored activations</h2>
+          <h2 id="supporting-title">Two prespecified measures more clearly favored activations</h2>
         </header>
         <div>
           <p class="section-intro">The activation probe’s predicted scores had a stronger linear correlation with the judged engagement scores and a lower average error than the words-only predictions.</p>
@@ -2103,17 +2128,19 @@
             </article>
 
             <article class="evidence-card">
-              <span class="followup-label">Follow-up analysis</span>
+              <span class="prespecified-label">Prespecified</span>
               <h3>Average distance from the judged score</h3>
               <div class="metric-pair">
-                <div class="metric-box activation"><strong>0.29</strong><span>Activations</span></div>
-                <div class="metric-box words"><strong>0.55</strong><span>Words only</span></div>
+                <div class="metric-box activation"><strong>0.28</strong><span>Activations</span></div>
+                <div class="metric-box words"><strong>0.62</strong><span>Words only</span></div>
               </div>
-              <p class="small-copy">This is the average distance between a predictor’s number and the judges’ number on the 0–3 scale; lower is better. The words-only predictor tended to bunch its estimates near the middle of the scale. In a follow-up check, we used development data to learn how much each predictor’s output should be shifted and stretched to match the 0–3 scale, then applied those fixed corrections to confirmation. After the same calibration procedure was applied to both predictors, the activation predictor had the lower average error: 0.29 versus 0.55.</p>
+              <p class="small-copy">This is the <strong>mean absolute error</strong>: the average distance between a predictor’s number and the judges’ number on the 0–3 scale, where lower is better. These values use each predictor’s confirmation estimates exactly as produced, with no later adjustment. The words-only predictor tended to bunch its estimates near the middle of the scale.</p>
             </article>
           </div>
 
-          <p class="footnote">For transparency, the original preregistered analysis used each predictor’s confirmation estimates exactly as produced, before this later calibration: average errors were 0.28 for activations and 0.62 for words only. The 0.29 and 0.55 values above come from the follow-up calibrated comparison.</p>
+          <p class="footnote">In a later follow-up, we used development data to learn how much each predictor’s output should be shifted and stretched to match the 0–3 scale, then applied those fixed corrections to confirmation. After the same calibration was applied to both, the activation predictor still had the lower average error: 0.29 versus 0.55.</p>
+
+          <p class="family-note"><strong>Why the two measures disagree.</strong> The ranking comparison in Section 06 was inconclusive while the correlation comparison here was clearly positive. Ranking asks only whether prompts are placed in the right order, and prompt type alone already produced most of the correct order—0.781 against a maximum of 1.0—leaving little room for activations to improve on words. Correlation additionally rewards placing predictions at the right distance from one another, and the words-only predictor bunched its estimates near the middle of the scale. The decision rule keyed on ranking, so the primary test is reported as inconclusive.</p>
         </div>
       </div>
     </section>
@@ -2173,7 +2200,7 @@
           <article class="evidence-card split-sensitivity-card">
             <span class="followup-label">Post-hoc robustness check</span>
             <h3>Alternative development/confirmation splits also favored activations</h3>
-            <p class="small-copy">Before running this follow-up, we wrote down and froze exactly how the alternative splits would be created and analyzed. We then repeated the full procedure 200 times. Each repetition assigned a different set of 30 ladders to development and ten to held-out evaluation, then reselected the activation layer and rebuilt both predictors using only that repetition’s development ladders. As an implementation check, running the original split through this pipeline reproduced its selected layer and every primary value to the last saved digit.</p>
+            <p class="small-copy">Before running this follow-up, we wrote down and froze exactly how the alternative splits would be created and analyzed. We then repeated the full procedure 200 times. Each repetition assigned a different set of 30 subject areas to development and ten to held-out evaluation, then reselected the activation layer and rebuilt both predictors using only that repetition’s development subject areas. As an implementation check, running the original split through this pipeline reproduced its selected layer and every primary value to the last saved digit.</p>
             <figure class="split-histogram">
               <figcaption>Activation-minus-words ranking advantage across 200 alternative splits</figcaption>
               <div class="split-histogram__plot" role="img" aria-label="Histogram of 200 alternative split results. All activation-minus-words ranking advantages are positive, ranging from positive 0.005 to positive 0.167. The original result, positive 0.046, is marked near the lower end of the distribution. Bin counts from lowest to highest are 4, 23, 30, 49, 37, 29, 16, 8, and 4.">
@@ -2229,7 +2256,7 @@
 
           </article>
 
-          <p class="family-note"><strong>Why these are supporting results, not confirmation.</strong> Both the prompt-type adjustment and the repeated-split procedure were designed after the primary result was known. The repeated splits reuse the same 40 ladders and overlap with one another, so their distribution is a stability diagnostic—not a confidence interval, p-value, or new confirmatory test. The original preregistered confirmation result remains primary.</p>
+          <p class="family-note"><strong>Why these are supporting results, not confirmation.</strong> Both the prompt-type adjustment and the repeated-split procedure were designed after the primary result was known. The repeated splits reuse the same 40 subject areas and overlap with one another, so their distribution is a stability diagnostic—not a confidence interval, p-value, or new confirmatory test. The original preregistered confirmation result remains primary.</p>
         </div>
       </div>
     </section>
@@ -2246,11 +2273,11 @@
               <h3>What we found</h3>
               <ul class="check-list">
                 <li>Gemma’s pre-answer state strongly predicted how fully it would answer.</li>
-                <li>The signal generalized to untouched semantic ladders.</li>
+                <li>The signal generalized to untouched subject areas.</li>
                 <li>It was readable across many later layers.</li>
                 <li>It tracked engagement more closely than words alone.</li>
                 <li>The adjusted analysis produced a much larger activation-over-words difference (+0.393) than the primary comparison (+0.046). However, it used a different target—engagement after removing development-estimated average differences among A, B, C, D1, and D2 prompts—so the two numbers are not an apples-to-apples measure of improvement.</li>
-                <li>In a separate stability analysis, all 200 alternative development/confirmation splits favored activations over words alone. The original split produced a smaller advantage than most alternatives. Because this analysis was designed after the primary result and repeatedly reused overlapping subsets of the same ladders, it is supporting evidence rather than independent confirmation.</li>
+                <li>In a separate stability analysis, all 200 alternative development/confirmation splits favored activations over words alone. The original split produced a smaller advantage than most alternatives. Because this analysis was designed after the primary result and repeatedly reused overlapping subsets of the same subject areas, it is supporting evidence rather than independent confirmation.</li>
               </ul>
             </article>
 
@@ -2290,7 +2317,7 @@
             </div>
             <div class="next-row">
               <dt>Using more independent subject areas</dt>
-              <dd>The next study will use <strong>more than the current 40 semantic ladders</strong>, with particular emphasis on enlarging the held-out confirmation set. Because each ladder—not each related prompt—is treated as one independent group, adding new subject areas should narrow uncertainty more effectively than generating many more answers to the same prompts. The exact sample size will be set from a prospective power analysis and the available scoring and compute budget before preregistration.</dd>
+              <dd>The next study will use <strong>more than the current 40 subject areas</strong>, with particular emphasis on enlarging the held-out confirmation set. Because each subject area—not each related prompt—is treated as one independent group, adding new ones should narrow uncertainty more effectively than generating many more answers to the same prompts. The exact sample size will be set from a prospective power analysis and the available scoring and compute budget before preregistration.</dd>
             </div>
             <div class="next-row">
               <dt>Separating what was given from what was held back</dt>
@@ -2302,7 +2329,7 @@
             </div>
             <div class="next-row">
               <dt>Checking dependence on one data split</dt>
-              <dd>The locked confirmation set will remain the primary test. The next study will also preregister a grouped, repeated-split robustness analysis to test <strong>whether the conclusion changes across reasonable data splits</strong>. Each repetition will divide whole ladders—not individual prompts—into development and evaluation groups. Calibration and every fitted predictor will be rebuilt using only the development ladders before scoring the held-out ladders. If the two analyses disagree, that disagreement will be reported as evidence that the result is split-sensitive rather than resolved by choosing whichever estimate looks better.</dd>
+              <dd>The locked confirmation set will remain the primary test. The next study will also preregister a grouped, repeated-split robustness analysis to test <strong>whether the conclusion changes across reasonable data splits</strong>. Each repetition will divide whole subject areas—not individual prompts—into development and evaluation groups. Calibration and every fitted predictor will be rebuilt using only the development subject areas before scoring the held-out ones. If the two analyses disagree, that disagreement will be reported as evidence that the result is split-sensitive rather than resolved by choosing whichever estimate looks better.</dd>
             </div>
             <div class="next-row">
               <dt>Reading a more stable multi-layer signal</dt>
@@ -2315,7 +2342,7 @@
           <dl class="next-list">
             <div class="next-row">
               <dt>Telling “won’t answer” from “can’t answer”</dt>
-              <dd><strong>Build semantic ladders around capabilities the model has already demonstrated.</strong> In a separate pilot, give the model safe, fully specified prompts with objectively checkable answers and score them against an answer key. Keep only prompt families the model answers reliably across several attempts. The later ladders can then introduce missing information, an impossible action, or a safety constraint while preserving the underlying knowledge or skill. For safety prompts, a benign matched prompt would first verify the same technical skill without requesting harmful assistance. This would not prove that every thin answer reflects a decision not to engage, but it would make simple inability less plausible.</dd>
+              <dd><strong>Build subject areas around capabilities the model has already demonstrated.</strong> In a separate pilot, give the model safe, fully specified prompts with objectively checkable answers and score them against an answer key. Keep only prompt families the model answers reliably across several attempts. The later subject areas can then introduce missing information, an impossible action, or a safety constraint while preserving the underlying knowledge or skill. For safety prompts, a benign matched prompt would first verify the same technical skill without requesting harmful assistance. This would not prove that every thin answer reflects a decision not to engage, but it would make simple inability less plausible.</dd>
             </div>
             <div class="next-row">
               <dt>Moving from reading to changing</dt>
@@ -2336,11 +2363,11 @@
       <div class="roles-grid">
         <article class="role-card">
           <h3>Human direction and decisions</h3>
-          <p class="small-copy">The human researcher originated the project, set its questions and priorities, approved the protocol, rubric, prompt set, and analysis choices, ran the external generation and web-chat judging workflow, reviewed selected code and adjudication cases, and made the final interpretive and publication decisions.</p>
+          <p class="small-copy">The human researcher originated the project and its central question, specified parts of the protocol, rubric, prompt set, and analysis plan, and approved all of it before the study began. They ran the external generation and web-chat judging workflow, reviewed selected code and adjudication cases, and made the final interpretive and publication decisions.</p>
         </article>
         <article class="role-card">
           <h3>LLM assistance and judging</h3>
-          <p class="small-copy">LLM assistants drafted the semantic ladders and documentation, wrote and tested most of the analysis code, suggested some methods and sensitivity checks, assisted with case-by-case adjudication, and produced initial report drafts that underwent extensive human feedback and revision. Three separate model families also supplied the blinded judge scores. This was a human-directed, LLM-assisted project—not an independent human replication or a fully manual scoring pipeline.</p>
+          <p class="small-copy">LLM assistants drafted the subject areas and documentation, wrote and tested most of the analysis code, suggested some methods and sensitivity checks alongside those specified by the researcher, assisted with case-by-case adjudication, and produced initial report drafts that underwent extensive human feedback and revision. Three separate model families also supplied the blinded judge scores. This was a human-directed, LLM-assisted project—not an independent human replication or a fully manual scoring pipeline.</p>
         </article>
       </div>
     </section>
