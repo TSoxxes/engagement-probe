@@ -183,6 +183,17 @@ No operationally harmful generations should be released.
   layers as a prespecified secondary comparison; it cannot be promoted to the
   primary result after outcomes are known. In the Round 2 sensitivity analysis,
   layer 25 was chosen in only 28 of 200 splits, while layer 18 was chosen in 60.
+- Prespecify a regularization sensitivity check. Round 2 fixed ridge penalties
+  in advance and never varied them: alpha 10.0 for the activation arm and 1.0
+  for the sparse text arm. Fixing them before analysis avoided tuning toward a
+  positive result, but leaves open whether the activation-minus-text delta holds
+  across other reasonable penalties, and whether the arms' different values
+  affected the comparison. The check re-runs development-only layer selection
+  and fitting across a range of penalties for both arms and reports whether the
+  delta is stable; confirmation data is not involved. Deferred from the Round 2
+  revision on 2026-08-20 as out of scope for a published report, not because the
+  question was resolved.
+
 - Compare a prompt-only predictor with an augmented predictor that uses
   activations to predict what the prompt-only estimate misses. Use the
   augmented-minus-prompt-only ranking improvement after accounting for broad
