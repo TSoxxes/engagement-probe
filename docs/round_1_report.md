@@ -81,7 +81,7 @@ The defensible primary conclusion is therefore:
 
 > Later hidden states contained a decodable signal associated with relative
 > substantive engagement, but the pilot did not establish a calibrated,
-> refusal-independent, or out-of-domain willingness measure.
+> refusal-independent, or out-of-domain engagement measure.
 
 ## Generation variability
 

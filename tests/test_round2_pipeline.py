@@ -244,10 +244,16 @@ class Round2PipelineTest(unittest.TestCase):
                 str(dataset_path),
                 "--output-dir",
                 str(annotation),
+                "--batch-size",
+                "2",
             ],
             check=True,
             capture_output=True,
             text=True,
+        )
+        self.assertEqual(
+            len(list((annotation / "packets" / "batches").glob("judge_1_batch_*.jsonl"))),
+            3,
         )
         raw = annotation / "raw_scores"
         for judge in (1, 2, 3):
