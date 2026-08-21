@@ -183,6 +183,22 @@ No operationally harmful generations should be released.
   layers as a prespecified secondary comparison; it cannot be promoted to the
   primary result after outcomes are known. In the Round 2 sensitivity analysis,
   layer 25 was chosen in only 28 of 200 splits, while layer 18 was chosen in 60.
+- Rebuild the A and D-capability conditions before setting sample size. The
+  planned primary endpoint is measured within conditions, after removing
+  condition means, so it can only draw on within-condition variation. Two of
+  five Round 2 conditions supply almost none. Every one of the 120 A responses
+  scored exactly 3.00, leaving no variance of any kind. In D-capability,
+  prompts differ from each other less than repeated generations of the same
+  prompt differ (between-prompt SD 0.179 against within-prompt SD 0.233,
+  ICC 0.37), and scores compress into 0 to 1.67. B, C, and D-harmful are
+  healthy by comparison (ICC 0.89, 0.84, and 0.94). A needs prompts the model
+  does not answer perfectly every time; D-capability needs impossible requests
+  that differ more from one another, since a uniform "I cannot do that" carries
+  no signal. More generations per prompt does not help either case. Estimated
+  post-hoc from all 160 prompts by `src/analyze_round2_reliability.py`; the
+  32-prompt variability subset is too small per condition to estimate this and
+  gave a spurious ICC of 0.00 for D-harmful.
+
 - Prespecify a regularization sensitivity check. Round 2 fixed ridge penalties
   in advance and never varied them: alpha 10.0 for the activation arm and 1.0
   for the sparse text arm. Fixing them before analysis avoided tuning toward a

@@ -60,6 +60,7 @@ def variance_components(frame: pd.DataFrame) -> dict:
     var_within = ms_within
     var_between = max(0.0, (ms_between - ms_within) / n0)
 
+    total_var = var_between + var_within
     return {
         "prompts": int(k),
         "observations": int(total),
@@ -68,8 +69,13 @@ def variance_components(frame: pd.DataFrame) -> dict:
         ),
         "var_between": var_between,
         "var_within": var_within,
-        "within_share": var_within / (var_between + var_within),
-        "icc_single_generation": var_between / (var_between + var_within),
+        "between_sd": float(np.sqrt(var_between)),
+        "within_sd": float(np.sqrt(var_within)),
+        # Undefined when a condition is fully saturated: if every response
+        # scores identically there is no variance of either kind to apportion.
+        "within_share": float(var_within / total_var) if total_var > 0 else None,
+        "icc_single_generation": float(var_between / total_var) if total_var > 0 else None,
+        "saturated": bool(total_var == 0),
     }
 
 
@@ -131,11 +137,14 @@ def main() -> None:
         }
         result[f"condition_residual_{name}"] = comp
 
-    # Per-condition within-prompt spread on the subset.
-    result["subset_by_condition"] = {
+    # Per-condition estimates use all prompts, not the variability subset.
+    # The subset holds only 3-5 prompts in each D condition, too few for a
+    # stable between-prompt variance: it returned an ICC of 0.00 for harmful-
+    # request prompts, an artifact of the estimator hitting its floor, where
+    # the full 20 prompts give 0.94.
+    result["by_condition_all_prompts"] = {
         str(cond): variance_components(part)
-        for cond, part in subset.groupby("design_condition")
-        if part["prompt_id"].nunique() >= 3
+        for cond, part in full.groupby("design_condition")
     }
 
     # How much of the response-level score is judge disagreement, pre-adjudication.
