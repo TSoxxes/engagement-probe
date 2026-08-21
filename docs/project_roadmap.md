@@ -1,6 +1,6 @@
 # Willingness Probe project roadmap
 
-Status updated: 2026-08-03
+Status updated: 2026-08-21
 
 ## Project objective
 
@@ -118,7 +118,7 @@ The repeated-split procedure and results are documented in:
 - `docs/round2_repeated_split_sensitivity_report.md`
 - `results/round2_main/run_round2/analysis/repeated_split_sensitivity/`
 
-### 6. Round 2 deliverables — in final review
+### 6. Round 2 deliverables — complete
 
 - A concise technical report with the preregistered primary result
 - Development and confirmation metrics with uncertainty
@@ -129,8 +129,12 @@ The repeated-split procedure and results are documented in:
   run configuration, and provenance hashes
 
 The technical summary is in `docs/round_2_results_summary.md`. The public HTML
-report is undergoing final wording review before the revision markings are
-removed.
+report is published at <https://tsoxxes.github.io/willingness-probe-report/>.
+An external reader review in August 2026 prompted a revision covering the
+statement of the research question, the motivation section, a methods
+description, the rationale for the primary metric, and the removal of the
+"semantic ladder" terminology. Deferred items from that review are recorded
+under Round 3.
 
 ## Parallel exploratory track: behavioral-cell diagnostic
 
