@@ -17,6 +17,8 @@ under-answered.
 (~15 minutes, written for a general technical audience) ·
 [PDF](output/pdf/engagement_probe_report.pdf)
 
+By Tyler Ames.
+
 ---
 
 ## The result, stated honestly
@@ -250,8 +252,12 @@ explicitly — including which parts of the protocol, rubric, and interpretation
 were human decisions and which drafting and coding was model-assisted. Three
 separate model families supplied the judge scores.
 
-## License
+## License and citation
 
 [MIT](LICENSE). Generations under `results/` are outputs of
 `google/gemma-2-2b-it` and are also subject to the
 [Gemma Terms of Use](https://ai.google.dev/gemma/terms).
+
+If you refer to this work, citation metadata is in
+[`CITATION.cff`](CITATION.cff) — GitHub's "Cite this repository" button reads
+from it.
