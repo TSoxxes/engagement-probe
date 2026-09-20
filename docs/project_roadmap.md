@@ -1,6 +1,6 @@
 # Engagement Probe project roadmap
 
-Status updated: 2026-08-21
+Status updated: 2026-09-20
 
 ## Project objective
 
@@ -69,7 +69,10 @@ See:
 - `docs/round_2_pilot_report.md`
 - `docs/round_2_freeze_manifest.json`
 
-## Current milestone: finish the public Round 2 report and prepare the next preregistration
+## Current milestone: prepare the next preregistration
+
+Round 2 is finished and published. Every item in this section is complete; it
+is kept as the record of how the round was run. The open work is Round 3.
 
 ### 1. Main generation — complete
 
