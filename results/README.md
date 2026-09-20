@@ -1,7 +1,7 @@
 # Released Round 2 artifacts
 
 This directory holds the data behind the Round 2 numbers reported in
-[the public short report](https://tsoxxes.github.io/willingness-probe-report/)
+[the public short report](https://tsoxxes.github.io/engagement-probe-report/)
 and in [`docs/round_2_results_summary.md`](../docs/round_2_results_summary.md).
 
 Everything here is the output of the frozen protocol described in
@@ -16,6 +16,7 @@ results/round2_main/
   validation_summary.json                  run-level integrity checks
   run_round2/
     responses.jsonl                        576 generated responses + metadata
+    activations.npz                        160 x 27 x 2304 pre-answer states
     run_config.json                        model, seeds, decoding settings
     analysis/                              all analysis outputs (see below)
     judging_web/
@@ -43,17 +44,39 @@ results/round2_main/
 
 | Not released | Size | Why |
 |---|---|---|
-| `run_round2/activations.npz` | 18 MB | Bulk tensor: 160 prompts × 27 layers × 2,304 dims. Available on request. |
 | `judging_web/packets/` | 3.5 MB | Blinded input packets — process material, reconstructible from `responses.jsonl` |
 | `judging_web/manual_review/`, `raw_scores/` | 1.3 MB | Per-pass raw judge transcripts behind the aggregates |
 | `results/archive/` | 7 MB | Round 1 pilot runs, superseded by Round 2 |
 
-**This matters for what you can reproduce.** The activation tensor is not
-published, and `src/analyze_round2.py` requires it. So you can verify every
-reported number against the saved per-prompt predictions, inspect every
-response and every judge label, and re-run the text-only baselines — but you
-cannot re-fit the activation probe from this repository alone. Ask if you want
-the tensor; it is 18 MB and there is no reason not to share it.
+Everything the confirmatory analysis consumes **is** here, so the primary result
+can be re-derived from this repository on a laptop with no GPU and no model
+access:
+
+```bash
+python src/analyze_round2.py \
+    --dataset data/round2_ladders.jsonl \
+    --responses results/round2_main/run_round2/responses.jsonl \
+    --activations results/round2_main/run_round2/activations.npz \
+    --run-config results/round2_main/run_round2/run_config.json \
+    --judge-files \
+      results/round2_main/run_round2/judging_web/aggregated/judge_1.jsonl \
+      results/round2_main/run_round2/judging_web/aggregated/judge_2.jsonl \
+      results/round2_main/run_round2/judging_web/aggregated/judge_3.jsonl \
+    --manual-scores results/round2_main/run_round2/judging_web/aggregated/manual_scores.jsonl \
+    --prompt-scores results/round2_main/run_round2/prompt_annotations/aggregated/prompt_scores.jsonl \
+    --output-dir /tmp/round2_recheck
+```
+
+Then compare `/tmp/round2_recheck/round2_summary.json` against the committed
+`analysis/round2_summary.json`. The bootstrap is seeded (`--seed`, default
+20260801).
+
+This has been checked: re-running the command above reproduces all 70 numeric
+fields, with every reported figure — the selected layer, both confirmation
+Spearman values, and the primary delta — identical to the last digit. The
+largest disagreement anywhere in the file is 3e-15, in a bootstrap interval
+bound, which is floating-point summation order and not a difference in result.
+Compare with a tolerance rather than exact string equality.
 
 ## Verifying the headline numbers
 

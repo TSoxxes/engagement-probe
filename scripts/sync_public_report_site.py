@@ -10,15 +10,15 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_REMOTE = "https://github.com/TSoxxes/willingness-probe-report"
+EXPECTED_REMOTE = "https://github.com/TSoxxes/engagement-probe-report"
 ASSET_PATHS = (
     (
-        Path("report/willingness_probe_report_v3.html"),
+        Path("report/engagement_probe_report_v3.html"),
         Path("index.html"),
     ),
     (
-        Path("output/pdf/willingness_probe_report.pdf"),
-        Path("willingness_probe_report.pdf"),
+        Path("output/pdf/engagement_probe_report.pdf"),
+        Path("engagement_probe_report.pdf"),
     ),
 )
 

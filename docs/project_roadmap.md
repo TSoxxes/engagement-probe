@@ -1,4 +1,4 @@
-# Willingness Probe project roadmap
+# Engagement Probe project roadmap
 
 Status updated: 2026-08-21
 
@@ -129,7 +129,7 @@ The repeated-split procedure and results are documented in:
   run configuration, and provenance hashes
 
 The technical summary is in `docs/round_2_results_summary.md`. The public HTML
-report is published at <https://tsoxxes.github.io/willingness-probe-report/>.
+report is published at <https://tsoxxes.github.io/engagement-probe-report/>.
 An external reader review in August 2026 prompted a revision covering the
 statement of the research question, the motivation section, a methods
 description, the rationale for the primary metric, and the removal of the

@@ -5,15 +5,16 @@ results/*
 !results/README.md
 
 # Released Round 2 artifacts (see results/README.md). Everything needed to
-# reproduce the published numbers is published here. The 18 MB activation
-# tensor, the blinded judging packets, and the raw per-pass judge transcripts
-# stay local -- they are bulk or process material, not results.
+# reproduce the published numbers is published here, including the activation
+# tensor. The blinded judging packets and the raw per-pass judge transcripts
+# stay local -- they are process material, not results.
 !results/round2_main/
 results/round2_main/*
 !results/round2_main/validation_summary.json
 !results/round2_main/run_round2/
 results/round2_main/run_round2/*
 !results/round2_main/run_round2/responses.jsonl
+!results/round2_main/run_round2/activations.npz
 !results/round2_main/run_round2/run_config.json
 !results/round2_main/run_round2/analysis/
 !results/round2_main/run_round2/judging_web/
@@ -31,8 +32,8 @@ tests/judging_test_workspace/
 # Local checkout of the separate GitHub Pages repository. Canonical report
 # assets live in report/ and output/pdf/; see docs/public_report_publishing.md.
 public-report-pages/
-report/willingness_probe_report.html
-report/willingness_probe_report_v2.html
+report/engagement_probe_report.html
+report/engagement_probe_report_v2.html
 
 # Funding-application and outreach drafts. These are private working documents
 # (budgets, applicant details, post drafts) and are deliberately not published

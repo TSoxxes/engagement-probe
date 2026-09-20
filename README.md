@@ -13,9 +13,9 @@ most of what was asked while using little or no refusal language** — and none 
 those 55 were on harmful prompts. They were ordinary requests, quietly
 under-answered.
 
-📄 **[Read the short report](https://tsoxxes.github.io/willingness-probe-report/)**
+📄 **[Read the short report](https://tsoxxes.github.io/engagement-probe-report/)**
 (~15 minutes, written for a general technical audience) ·
-[PDF](output/pdf/willingness_probe_report.pdf)
+[PDF](output/pdf/engagement_probe_report.pdf)
 
 ---
 
@@ -93,7 +93,7 @@ pip install numpy pandas matplotlib
 python -m unittest discover -s tests
 ```
 
-24 tests, no model download, no GPU. To exercise the full analysis path on tiny
+28 tests, no model download, no GPU. To exercise the full analysis path on tiny
 synthetic activations:
 
 ```bash
@@ -114,13 +114,50 @@ python src/build_round2_dataset.py
 python src/audit_round2_prompts.py
 ```
 
-## Inspect the actual data
+## Reproduce the result yourself
 
-The Round 2 responses, judge scores, and analysis outputs are committed under
-[`results/`](results/README.md) — 576 responses, 1,728 ratings, and every
-reported number. That directory's README explains what is there, what is not
-(the 18 MB activation tensor, available on request), and how to check the
-headline figures yourself.
+The Round 2 responses, activations, judge scores, and analysis outputs are all
+committed under [`results/`](results/README.md). The confirmatory analysis
+re-runs on a laptop — no GPU, no model access, no API keys:
+
+```bash
+python src/analyze_round2.py \
+    --dataset data/round2_ladders.jsonl \
+    --responses results/round2_main/run_round2/responses.jsonl \
+    --activations results/round2_main/run_round2/activations.npz \
+    --run-config results/round2_main/run_round2/run_config.json \
+    --judge-files \
+      results/round2_main/run_round2/judging_web/aggregated/judge_1.jsonl \
+      results/round2_main/run_round2/judging_web/aggregated/judge_2.jsonl \
+      results/round2_main/run_round2/judging_web/aggregated/judge_3.jsonl \
+    --manual-scores results/round2_main/run_round2/judging_web/aggregated/manual_scores.jsonl \
+    --prompt-scores results/round2_main/run_round2/prompt_annotations/aggregated/prompt_scores.jsonl \
+    --output-dir /tmp/round2_recheck
+```
+
+All 70 numeric fields reproduce, with every reported figure identical to the
+last digit and a worst-case disagreement of 3e-15 in one bootstrap bound. See
+[`results/README.md`](results/README.md) for what is and is not included.
+
+### Verifying the preregistration
+
+Round 2's protocol, rubric, analysis code, and prompt set were hash-frozen
+before any main-study data existed. You do not have to take that on trust:
+
+```bash
+python -m unittest tests.test_freeze_manifest -v
+```
+
+That checks every SHA-256 in
+[`docs/round_2_freeze_manifest.json`](docs/round_2_freeze_manifest.json) against
+the files on disk, and checks that the frozen dataset still has its declared
+160 prompts, 40 subject areas, and 30/10 development/confirmation split.
+
+Because `requirements.txt` is one of those frozen files, it is deliberately not
+updated — including to add `torch`, which [`src/generate.py`](src/generate.py)
+needs. Kaggle and Colab preinstall torch, so the frozen file works unmodified
+there. Anywhere else, install it alongside:
+`pip install -r requirements.txt torch`.
 
 ## Repository layout
 
@@ -130,7 +167,8 @@ docs/           Protocol, reports, audit responses, roadmap. Start with
                 round_2_results_summary.md.
 report/         Master HTML short report (v3 is current).
 output/pdf/     Master PDF of the short report.
-results/        Released Round 2 artifacts — see results/README.md.
+results/        Released Round 2 data: responses, activations, judge
+                scores, analysis outputs. See results/README.md.
 scoring/        Judge rubrics and the judging workflow.
 src/            Generation, judging aggregation, and analysis entry points.
 scripts/        Publishing helper for the separate report site.
