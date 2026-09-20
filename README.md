@@ -23,9 +23,10 @@ By Tyler Ames.
 
 ## The result, stated honestly
 
-Two preregistered rounds on `google/gemma-2-2b-it`. Round 2 locked the protocol,
-dataset hashes, rubric, and analysis code — with recorded SHA-256 checksums —
-before a single main-study response was generated. Ten of 40 subject areas were
+Two rounds on `google/gemma-2-2b-it`, each with its protocol, rubric, and
+analysis code frozen and hash-recorded before data collection. Round 2 locked
+the protocol, dataset hashes, rubric, and analysis code — with recorded SHA-256
+checksums — before a single main-study response was generated. Ten of 40 subject areas were
 held back untouched until a one-time confirmation analysis.
 
 On that untouched confirmation set:
@@ -38,7 +39,7 @@ On that untouched confirmation set:
 | Response length | 0.766 | 0.910 | 0.367 |
 | Token-cap rate | 0.190 | 0.236 | 1.047 |
 
-The preregistered primary test was whether activations *beat prompt wording* on
+The prespecified primary test was whether activations *beat prompt wording* on
 rank correlation. The observed advantage was **+0.046**, with a paired
 ladder-bootstrap interval of **−0.014 to +0.130**. That interval crosses zero,
 so under the rule committed to in advance, **the primary result is
@@ -141,7 +142,7 @@ All 70 numeric fields reproduce, with every reported figure identical to the
 last digit and a worst-case disagreement of 3e-15 in one bootstrap bound. See
 [`results/README.md`](results/README.md) for what is and is not included.
 
-### Verifying the preregistration
+### Verifying the frozen protocol
 
 Round 2's protocol, rubric, analysis code, and prompt set were hash-frozen
 before any main-study data existed. You do not have to take that on trust:
@@ -154,6 +155,18 @@ That checks every SHA-256 in
 [`docs/round_2_freeze_manifest.json`](docs/round_2_freeze_manifest.json) against
 the files on disk, and checks that the frozen dataset still has its declared
 160 prompts, 40 subject areas, and 30/10 development/confirmation split.
+
+**What this is and is not.** The freeze was self-hosted in this repository
+rather than deposited with a third-party registry, and the repository was
+private until publication. The ordering is therefore documented but not
+independently attested: the commit history shows the protocol landing before
+the run, but nothing outside my control certifies that. This study is
+prespecified, not preregistered, and the word is used that way throughout.
+Round 3 will be registered publicly before data collection.
+
+`docs/round_2_protocol.md` is itself one of the hashed files, so it still
+carries the older "preregistered" wording. Editing it would break the manifest
+and defeat the point of freezing it, so it is left as written.
 
 Because `requirements.txt` is one of those frozen files, it is deliberately not
 updated — including to add `torch`, which [`src/generate.py`](src/generate.py)
@@ -182,7 +195,7 @@ tests/          Regression tests. No model download required.
 | Document | What it is |
 |---|---|
 | [`docs/round_2_results_summary.md`](docs/round_2_results_summary.md) | The technical write-up. Read this first. |
-| [`docs/round_2_protocol.md`](docs/round_2_protocol.md) | The preregistered protocol |
+| [`docs/round_2_protocol.md`](docs/round_2_protocol.md) | The frozen protocol |
 | [`docs/round_2_freeze_manifest.json`](docs/round_2_freeze_manifest.json) | SHA-256 checksums recorded at freeze time |
 | [`docs/round_2_audit_response.md`](docs/round_2_audit_response.md) | Response to external design review |
 | [`docs/design_review_response.md`](docs/design_review_response.md) | Response to the review brief |

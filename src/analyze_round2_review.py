@@ -1,6 +1,6 @@
 """Post-hoc diagnostics prompted by external review of the frozen Round 2 run.
 
-This script does not replace or modify the preregistered analysis in
+This script does not replace or modify the prespecified analysis in
 ``analyze_round2.py``. It makes reviewer-requested sensitivity checks
 reproducible and labels them as post-hoc.
 """
@@ -459,7 +459,7 @@ def main() -> None:
         "within_confirmation_condition_centering": {
             "note": (
                 "Post-hoc descriptive association using confirmation-set "
-                "condition means; not a preregistered predictive estimand."
+                "condition means; not a prespecified predictive estimand."
             ),
             "activation_metrics": summarize(within_truth, within_activation),
             "text_metrics": summarize(within_truth, within_text),

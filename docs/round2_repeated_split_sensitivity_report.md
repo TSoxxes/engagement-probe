@@ -4,7 +4,7 @@
 
 This is a post-hoc robustness analysis. Its procedure was frozen in
 `docs/round2_repeated_split_sensitivity_spec.md` before any alternative-split
-results were calculated. It does not replace the preregistered Round 2 primary
+results were calculated. It does not replace the prespecified Round 2 primary
 test.
 
 ## Question

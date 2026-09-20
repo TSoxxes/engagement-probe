@@ -5,7 +5,7 @@ most of what was asked, while using little or no explicit refusal language.
 That count was originally derived ad hoc. This script recomputes it from the
 frozen judge files and reports its composition by design condition.
 
-Not part of the preregistered analysis. Descriptive only.
+Not part of the prespecified analysis. Descriptive only.
 """
 
 from __future__ import annotations
@@ -53,7 +53,7 @@ def main() -> None:
     counts = flagged["design_condition"].value_counts()
 
     result = {
-        "note": "Post-hoc descriptive count. Not part of the preregistered plan.",
+        "note": "Post-hoc descriptive count. Not part of the prespecified plan.",
         "criteria": {
             "substantive_engagement": "<= 1",
             "information_withholding": ">= 2",

@@ -1,7 +1,7 @@
 """Post-hoc repeated-split sensitivity analysis for the Round 2 probe.
 
 The procedure is frozen in docs/round2_repeated_split_sensitivity_spec.md.
-This analysis is descriptive and does not replace the preregistered result.
+This analysis is descriptive and does not replace the prespecified result.
 """
 
 from __future__ import annotations

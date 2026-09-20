@@ -52,7 +52,7 @@ See `docs/round_1_report.md`.
 - Completed the locked development/confirmation analysis. The activation probe
   achieved confirmation Spearman 0.868 versus 0.822 for sparse prompt text, but
   the +0.046 difference had a ladder-bootstrap interval crossing zero and did
-  not pass the preregistered primary rule.
+  not pass the prespecified primary rule.
 - Completed a separately specified post-hoc repeated-split sensitivity analysis.
   All 200 alternative splits favored activations; the median advantage was
   +0.077, and the original result was at the 16.5th percentile. This supports
@@ -110,7 +110,7 @@ unresolved. Artifacts are preserved under
 ### 5. Locked confirmatory analysis — complete
 
 The one-time confirmation analysis was run exactly as specified in
-`docs/round_2_workflow.md`. The preregistered Spearman decision rule was not met;
+`docs/round_2_workflow.md`. The prespecified Spearman decision rule was not met;
 Pearson, absolute error, condition-adjusted, and repeated-split diagnostics
 favored activations. Confirmatory and post-hoc results remain explicitly
 separated.
@@ -123,7 +123,7 @@ The repeated-split procedure and results are documented in:
 
 ### 6. Round 2 deliverables — complete
 
-- A concise technical report with the preregistered primary result
+- A concise technical report with the prespecified primary result
 - Development and confirmation metrics with uncertainty
 - Sparse-text comparison and calibration plots
 - A limitations section covering cell imbalance, prompt-form leakage, judge

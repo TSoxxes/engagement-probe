@@ -29,7 +29,7 @@ absolute error 0.615.
 
 The observed activation-minus-text Spearman advantage was +0.046. Its paired
 ladder-bootstrap 95% interval was -0.014 to +0.130, so it narrowly failed the
-preregistered requirement that the entire interval be above zero. The Pearson
+prespecified requirement that the entire interval be above zero. The Pearson
 advantage (+0.147, interval +0.082 to +0.228) and mean-absolute-error
 improvement (+0.332, interval +0.241 to +0.428) clearly favored activations.
 
@@ -44,13 +44,29 @@ diagnostic rather than a confidence interval, p-value, or confirmatory rescue.
 The appropriate headline is therefore: later hidden states contain a strong,
 generalizing signal about prompt-conditioned response behavior and yield much
 better calibrated engagement predictions than sparse prompt text, but the
-strict primary rank-correlation result was inconclusive under the preregistered
+strict primary rank-correlation result was inconclusive under the prespecified
 rule. The development layer-selection maximum was extremely shallow: index
 25 beat index 18 by only 0.00033 Spearman. That makes the exact pass/fail outcome
 sensitive to the frozen layer rule, even though the activation signal itself is
 robust across many layers.
 
 ## Scope of the claim
+
+### On the word "prespecified"
+
+The protocol, rubric, prompt set, and analysis code were frozen and
+hash-recorded before any main-study data was generated, and the confirmation
+split stayed untouched until the single confirmatory analysis. That freeze was
+self-hosted in a version-controlled repository rather than deposited with a
+third-party registry, and the repository was private until publication. The
+ordering is documented but not independently attested, so this study is
+described as prespecified rather than preregistered. Round 3 will be registered
+publicly before data collection.
+
+The frozen `docs/round_2_protocol.md` still uses the older wording. It is one
+of the hashed files and is left unedited rather than retroactively corrected.
+
+### What the result does not establish
 
 The study supports a predictive, prompt-conditioned claim. It does not yet
 establish:
@@ -256,11 +272,11 @@ varied enough to affect the small activation-over-text Spearman difference:
 | 22 | 0.939833 | 0.870905 |
 | 24 | 0.939215 | 0.854267 |
 
-This does not invalidate the preregistered selection: index 25 was chosen
+This does not invalidate the prespecified selection: index 25 was chosen
 without looking at confirmation. It does show that an argmax at the fourth
 decimal place is an unstable rule for future studies. As a post-hoc robustness
 check, 21 of all 27 indices beat the text baseline's confirmation Spearman; the
-best confirmation value, which must not replace the preregistered result, was
+best confirmation value, which must not replace the prespecified result, was
 0.894 at index 12.
 
 The repeated-split analysis made the layer instability clearer while preserving
@@ -306,7 +322,7 @@ post-hoc affine correction fit only on development leave-one-ladder-out
 predictions changes activation MAE from 0.283 to 0.294 and text MAE from 0.615
 to 0.545. The corrected gap remains substantial at 0.251 points. Rank and
 Pearson correlations are unchanged by this positive affine rescaling; the raw
-values remain the preregistered results and the recalibrated values are a
+values remain the prespecified results and the recalibrated values are a
 supporting diagnostic.
 
 Using the prespecified engagement threshold of 2, the activation probe
@@ -317,7 +333,7 @@ confirmation A prompts were maximally engaged, this classification result is
 partly an A-versus-rest result and should not be treated as a standalone
 capability claim.
 
-The preregistered primary estimand was activation Spearman minus prompt-text
+The prespecified primary estimand was activation Spearman minus prompt-text
 Spearman. Uncertainty was estimated by resampling entire confirmation ladders
 2,000 times, preserving dependence among the four prompts in a ladder.
 
@@ -423,7 +439,7 @@ Cross-target analysis shows a strongly coupled cluster: the engagement probe
 cross-predicts information withholding at Spearman -0.860 and explicit refusal
 at -0.740; the uncertainty probe cross-predicts underdetermination at 0.835,
 while the underdetermination probe cross-predicts uncertainty at 0.728. The
-preregistered specificity analysis therefore supports shared response-planning
+prespecified specificity analysis therefore supports shared response-planning
 structure more clearly than target separability. Distinguishable uncertainty
 and underdetermination profiles are not established by the present results.
 
@@ -495,14 +511,14 @@ ranking task is condition recognition rather than fine-grained prediction.
 
 The evidence that activations improve numerical calibration over sparse prompt
 text is strong. Evidence for a pooled rank-order advantage is highly suggestive
-but does not pass the study's strict preregistered 95% interval rule, and the
+but does not pass the study's strict prespecified 95% interval rule, and the
 exact outcome used a layer chosen on a broad, unstable development plateau.
 The 200-split sensitivity consistently favored activations and showed that the
 original split was comparatively unfavorable, strengthening the robustness
 case without changing the confirmatory verdict. Conversely,
 the development-defined residual comparison provides strong post-hoc evidence
 of an activation advantage beyond coarse condition. The primary result should
-be described as inconclusive under the preregistered rule, accompanied by
+be described as inconclusive under the prespecified rule, accompanied by
 strong supporting and exploratory diagnostics—not as either a null result or a
 conclusive discovery of a standalone engagement representation.
 
@@ -590,7 +606,7 @@ retroactive change to Round 2:
 An external reviewer should be asked to address:
 
 1. Is the primary result characterized correctly as inconclusive under the
-   preregistered rule?
+   prespecified rule?
 2. Do the Pearson and MAE results materially strengthen the scientific case
    despite the Spearman decision-rule failure?
 3. Does the residual analysis justify saying the signal extends beyond explicit
@@ -653,7 +669,7 @@ interpretations rather than correcting the estimate.
 
 **The frozen-index result should lead its pair.** Index 18 was selected by
 sweeping the residual target on development, so it is a post-hoc selection. At
-the preregistered index 25 the raw-length-adjusted result is stronger, at 0.755.
+the prespecified index 25 the raw-length-adjusted result is stronger, at 0.755.
 Raw length is the principal adjustment because it has the stronger linear
 association with engagement, at Pearson 0.910 raw against 0.759 for
 log-length on confirmation, and 0.760 against 0.562 on development. The

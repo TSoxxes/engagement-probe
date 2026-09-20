@@ -1,4 +1,4 @@
-# Frozen Round 2 preregistration artifacts.
+# Frozen Round 2 protocol artifacts.
 #
 # The SHA-256 values recorded in docs/round_2_freeze_manifest.json are over
 # these files' exact bytes, line endings included. Without pinning, Git's
@@ -6,7 +6,7 @@
 # freeze verification fails on a clean clone -- on Linux and macOS for the
 # dataset, and on a default Windows configuration for everything else.
 #
-# The hashes are the preregistration record and are not editable, so the
+# The hashes are the frozen-protocol record and are not editable, so the
 # checkout is pinned to match them instead. data/round2_ladders.jsonl is CRLF
 # because it was hashed on Windows at freeze time on 2026-07-26; the rest were
 # hashed as LF. The inconsistency is historical, and preserved deliberately.

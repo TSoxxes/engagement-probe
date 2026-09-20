@@ -6,7 +6,7 @@ same prompt. That estimate was never computed. This script computes it and
 reports the ceiling it implies on any predictor's agreement with the
 prompt-level target.
 
-Not part of the preregistered analysis. Descriptive only.
+Not part of the prespecified analysis. Descriptive only.
 """
 
 from __future__ import annotations
@@ -108,7 +108,7 @@ def main() -> None:
     full = scores.copy()
 
     result = {
-        "note": "Post-hoc descriptive analysis. Not part of the preregistered plan.",
+        "note": "Post-hoc descriptive analysis. Not part of the prespecified plan.",
         "target": TARGET,
         "variability_subset": variance_components(subset),
         "all_prompts": variance_components(full),

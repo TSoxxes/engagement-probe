@@ -1,4 +1,4 @@
-"""Check preregistered behavioral-realization gates on the Round 2 pilot."""
+"""Check prespecified behavioral-realization gates on the Round 2 pilot."""
 
 from __future__ import annotations
 

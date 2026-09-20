@@ -1,6 +1,6 @@
 """Post-hoc response-length diagnostics for the frozen Round 2 run.
 
-This script does not replace or modify the preregistered analysis in
+This script does not replace or modify the prespecified analysis in
 ``analyze_round2.py``. It asks a question the frozen protocol did not
 prespecify: how much of the decoded engagement signal could instead be a
 signal about how long an answer the model was preparing to produce.

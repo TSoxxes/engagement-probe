@@ -2,12 +2,13 @@ cff-version: 1.2.0
 message: "If you refer to this work, please cite it as below."
 title: "Engagement Probe: predicting how fully a language model will answer, from its pre-answer internal state"
 abstract: >-
-  A two-round preregistered study testing whether an instruction-tuned language
+  A two-round study, with the protocol frozen and hash-recorded before data
+  collection, testing whether an instruction-tuned language
   model's hidden state, recorded after it reads a prompt but before it generates
   any tokens, predicts how substantively it will engage with that request. On an
   untouched confirmation split the activation probe reached Spearman 0.868
   against 0.822 for a sparse prompt-text baseline; the +0.046 advantage did not
-  clear the preregistered decision rule, and the primary result is reported as
+  clear the prespecified decision rule, and the primary result is reported as
   inconclusive. Includes the frozen protocol, the prompt set, three-judge
   blinded ratings, and the released Round 2 data.
 type: software
@@ -24,6 +25,6 @@ keywords:
   - activation probing
   - linear probes
   - language model evaluation
-  - preregistration
+  - prespecified analysis
   - refusal
   - over-refusal

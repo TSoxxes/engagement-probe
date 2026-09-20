@@ -2255,7 +2255,7 @@
 
           </article>
 
-          <p class="family-note"><strong>Why these are supporting results, not confirmation.</strong> Both the prompt-type adjustment and the repeated-split procedure were designed after the primary result was known. The repeated splits reuse the same 40 subject areas and overlap with one another, so their distribution is a stability diagnostic—not a confidence interval, p-value, or new confirmatory test. The original preregistered confirmation result remains primary.</p>
+          <p class="family-note"><strong>Why these are supporting results, not confirmation.</strong> Both the prompt-type adjustment and the repeated-split procedure were designed after the primary result was known. The repeated splits reuse the same 40 subject areas and overlap with one another, so their distribution is a stability diagnostic—not a confidence interval, p-value, or new confirmatory test. The original prespecified confirmation result remains primary.</p>
         </div>
       </div>
     </section>
@@ -2283,13 +2283,14 @@
             <article class="conclusion-card unresolved">
               <h3>What remains unresolved</h3>
               <ul class="check-list">
-                <li>The preregistered activation-versus-words ranking advantage did not meet the study’s success threshold.</li>
+                <li>The prespecified activation-versus-words ranking advantage did not meet the study’s success threshold.</li>
                 <li>We cannot yet separate declining to answer from lacking information or capability.</li>
                 <li>The current rubric made engagement and information withholding nearly mirror images, so the study could not measure them as clearly separate behaviors.</li>
                 <li>Prompt wording strongly signals the intended prompt type, so this design cannot support claims about a representation independent of how a request is worded.</li>
                 <li>Longer answers generally received higher engagement scores, and the pre-answer state may encode both expected answer length and substantive content. Because length could be either an alternative explanation or part of engagement itself, this study does not cleanly separate the two.</li>
                 <li>Only one relatively small language model was studied, so these results cannot yet support claims about language models generally.</li>
                 <li>Prediction does not establish that the decoded signal causes behavior.</li>
+                <li>The protocol, rubric, prompt set, and analysis code were frozen and hash-recorded before any main-study data was generated, but that freeze was self-hosted rather than deposited with a third-party registry. The ordering is documented, not independently attested, so this study is described as prespecified rather than preregistered.</li>
               </ul>
             </article>
           </div>
@@ -2306,7 +2307,7 @@
           <h2 id="next-title">The next study is designed around what this one could not settle</h2>
         </header>
         <div>
-          <p class="section-intro">The next steps address both the unresolved questions above and design limitations revealed by the supporting analyses. The follow-up study will be preregistered before any data is collected, using the same safeguards applied here: its primary test, success rule, and held-out confirmation split will all be locked in advance.</p>
+          <p class="section-intro">The next steps address both the unresolved questions above and design limitations revealed by the supporting analyses. The follow-up study will be registered with a public, third-party registry before any data is collected — closing the one gap in this study, whose freeze was self-hosted. It will carry over the safeguards applied here: its primary test, success rule, and held-out confirmation split will all be locked in advance.</p>
 
           <p class="next-group">The next study</p>
           <dl class="next-list">
@@ -2350,7 +2351,7 @@
           </dl>
 
           <div class="family-note">
-            <p><strong>What limits the scale of this work.</strong> The binding constraints are scoring and compute: every response is rated by three separate judge models, and larger-model comparisons consume substantially more of the limited free GPU budget and may exceed it. Prompt writing, analysis code, and the preregistration workflow already exist and can carry over largely unchanged.</p>
+            <p><strong>What limits the scale of this work.</strong> The binding constraints are scoring and compute: every response is rated by three separate judge models, and larger-model comparisons consume substantially more of the limited free GPU budget and may exceed it. Prompt writing, analysis code, and the protocol-freeze workflow already exist and can carry over largely unchanged.</p>
             <p>The new primary comparison and split-robustness analysis do not by themselves require additional prompts, generations, or judge ratings. Reading and analyzing multiple layers does require additional computation and storage, particularly for larger models. What scales most directly with the available budget is breadth: how many new subject areas can be written and judged, how many prompts receive answer checklists, and how far the model comparison extends. Moving beyond the current 2B model would be the first major increase in compute cost; adding a second model family would increase it further.</p>
           </div>
         </div>
@@ -2373,7 +2374,7 @@
 
     <section class="page-shell" aria-labelledby="code-and-data-title">
       <h2 id="code-and-data-title">Code and data</h2>
-      <p class="small-copy">The preregistered protocol, the frozen prompt set, the analysis code, and the released Round&nbsp;2 data are public at <a href="https://github.com/TSoxxes/engagement-probe">github.com/TSoxxes/engagement-probe</a>. That repository includes all 576 generated responses, the three judge families’ ratings, and every analysis output behind the numbers reported here. The confirmatory analysis re-runs from it on a laptop, with no GPU and no model access, and the recorded protocol checksums can be verified against the files.</p>
+      <p class="small-copy">The frozen protocol, the prompt set, the analysis code, and the released Round&nbsp;2 data are public at <a href="https://github.com/TSoxxes/engagement-probe">github.com/TSoxxes/engagement-probe</a>. That repository includes all 576 generated responses, the three judge families’ ratings, and every analysis output behind the numbers reported here. The confirmatory analysis re-runs from it on a laptop, with no GPU and no model access, and the recorded protocol checksums can be verified against the files.</p>
     </section>
 
     <section class="page-shell references" aria-labelledby="references-title">

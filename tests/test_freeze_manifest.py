@@ -1,10 +1,10 @@
-"""Verify that every file frozen at Round 2 preregistration is byte-identical.
+"""Verify that every file frozen at the Round 2 protocol freeze is byte-identical.
 
 The Round 2 change policy is: "Any change to a hashed file requires a new
 protocol version and a new confirmation set." That policy is only meaningful if
 a violation is actually detected, so it is checked here rather than trusted.
 
-A failure here is not a routine test failure. It means a preregistered artifact
+A failure here is not a routine test failure. It means a frozen artifact
 has been edited, and the correct response is to restore the file -- not to
 update the manifest.
 """

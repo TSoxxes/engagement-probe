@@ -99,7 +99,7 @@ EOF
 
 Expected: 40 confirmation prompts, activation Spearman 0.8679, sparse-text
 Spearman 0.8219, advantage +0.0460. That advantage did **not** clear the
-preregistered rule — its paired ladder-bootstrap interval crossed zero — which
+prespecified rule — its paired ladder-bootstrap interval crossed zero — which
 is why the report calls the primary test inconclusive.
 
 ## A note on the released generations

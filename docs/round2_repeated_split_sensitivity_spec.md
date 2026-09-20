@@ -2,7 +2,7 @@
 
 **Status:** Post-hoc robustness analysis. This specification was frozen on
 2026-08-02 before any repeated-split results were calculated. The analysis
-cannot change the outcome of the preregistered Round 2 primary test.
+cannot change the outcome of the prespecified Round 2 primary test.
 
 ## Question
 
@@ -79,5 +79,5 @@ Across the 200 splits, report:
 - The distribution across overlapping random splits is a stability diagnostic,
   not a confidence interval, p-value, or new confirmatory test.
 - Results will be reported regardless of direction.
-- The original preregistered confirmation result remains the primary result.
+- The original prespecified confirmation result remains the primary result.
 - Any public-report addition will be labeled post hoc.

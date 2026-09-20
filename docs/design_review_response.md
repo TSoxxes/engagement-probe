@@ -35,7 +35,7 @@ six-axis rubric, two judges in triplicate. That is **Round 1**.
 
 The current state also includes a **frozen Round 2**: 40 independent ladders, 160 prompts,
 576 generations, a locked 30-development / 10-confirmation ladder split, a seven-axis
-rubric, a preregistered primary estimand with an explicit decision rule, a passed
+rubric, a prespecified primary estimand with an explicit decision rule, a passed
 pre-generation prompt audit, a passed behavioral pilot, and a document dispositioning three
 external review passes. Protocol status was set to frozen on 2026-07-26 and the main run
 was authorized. None of this appears in the brief; §7 restarts from the Round 1 pilot.
@@ -215,7 +215,7 @@ empty off-diagonal after the fact — is the sharpest thing in the brief.
 Round 2's primary estimand is whether activations add predictive value over prompt text for
 engagement. It does not require a populated lazy-compliance cell. An empty cell would limit
 stronger claims about refusal-independent "willingness" — which Round 2's protocol already
-declines to make — but would not invalidate the preregistered experiment. Revision 1 let
+declines to make — but would not invalidate the prespecified experiment. Revision 1 let
 the §2 finding bleed into an implied reason to delay Round 2; it is not one.
 
 ### The concern with the sourcing plan
@@ -478,7 +478,7 @@ so the repository shows findings summaries but no released raw or derived result
 
 **Run the frozen Round 2 as designed.** Nothing in this document is a reason to delay or
 discard it. Round 2 answers whether activations add predictive value over prompt text for
-engagement; that question does not require a populated 2×2, and the preregistered design is
+engagement; that question does not require a populated 2×2, and the prespecified design is
 sound.
 
 Before committing the full judging budget, run the §8 Stage 1a analyses on the 48 Round 2
@@ -575,7 +575,7 @@ Ordered by how much the answer changes the design.
 
 7. **Is there a prespecified decision rule for this phase?** Round 2 had an estimand, a
    bootstrap, and an interval requirement. The brief's kill criteria are qualitative. Given
-   the project's demonstrated preregistration discipline, that is a regression — and that
+   the project's demonstrated protocol-freeze discipline, that is a regression — and that
    discipline is the most transferable asset the project has.
 
 8. **Has anyone estimated the residual variance surviving LEACE**, or is the plan to find
