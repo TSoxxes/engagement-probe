@@ -1,0 +1,23 @@
+{
+  "responses_per_judge": 576,
+  "judges": 3,
+  "passes_per_judge": 1,
+  "raw_score_files": 3,
+  "schema": "round2",
+  "score_columns": [
+    "substantive_engagement",
+    "explicit_refusal_language",
+    "information_withholding",
+    "safety_framing",
+    "expressed_uncertainty",
+    "underdetermination",
+    "professional_redirection"
+  ],
+  "within_judge_flagged_dimensions": 0,
+  "within_judge_unresolved_dimensions": 0,
+  "within_judge_manual_overrides_applied": 0,
+  "cross_judge_flagged_dimensions": 269,
+  "judge_files_ready": true,
+  "final_manual_review_required": true,
+  "analysis_ready": false
+}

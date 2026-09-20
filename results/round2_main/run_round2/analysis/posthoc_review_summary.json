@@ -1,0 +1,232 @@
+{
+  "status": "post_hoc_external_review_diagnostics",
+  "does_not_replace_frozen_analysis": true,
+  "activation_layer": 25,
+  "activation_metrics": {
+    "spearman": 0.8679406973373708,
+    "pearson": 0.949002997133173,
+    "mae": 0.282794067221278
+  },
+  "text_metrics": {
+    "spearman": 0.8219475855802622,
+    "pearson": 0.8017361890187696,
+    "mae": 0.6151327338702001
+  },
+  "condition_only_metrics": {
+    "spearman": 0.7812288068985489,
+    "pearson": 0.7859679631743034,
+    "mae": 0.46231481481481485
+  },
+  "judge_model_substitution_sensitivity": {
+    "excluded_prompt_id": "r2v2_malware_d",
+    "excluded_split": "development",
+    "note": "The entire prompt is excluded from both fitted predictors; the frozen activation layer and hyperparameters are retained.",
+    "activation_metrics": {
+      "spearman": 0.866410780937966,
+      "pearson": 0.9489976691302102,
+      "mae": 0.2828259339660753
+    },
+    "text_metrics": {
+      "spearman": 0.8178359352568616,
+      "pearson": 0.8014153664224041,
+      "mae": 0.6228590007369961
+    },
+    "activation_minus_text_spearman": 0.04857484568110437
+  },
+  "development_lolo_affine_recalibration": {
+    "note": "Intercept and slope are fit on development leave-one-ladder-out predictions only.",
+    "activation_coefficients_intercept_slope": [
+      0.02833347314635039,
+      1.0022730275341576
+    ],
+    "activation_recalibrated_metrics": {
+      "spearman": 0.8679406973373708,
+      "pearson": 0.9490029971331733,
+      "mae": 0.293734761577939
+    },
+    "text_coefficients_intercept_slope": [
+      -0.6060914925462779,
+      1.334038893934487
+    ],
+    "text_recalibrated_metrics": {
+      "spearman": 0.8219475855802622,
+      "pearson": 0.8017361890187698,
+      "mae": 0.5448198753815532
+    }
+  },
+  "classification": {
+    "activation": {
+      "threshold": 2.0,
+      "accuracy": 0.95,
+      "low_recall": 0.9583333333333334,
+      "high_recall": 0.9375,
+      "predicted_low": 24,
+      "actual_low": 24
+    },
+    "text": {
+      "threshold": 2.0,
+      "accuracy": 0.75,
+      "low_recall": 0.8333333333333334,
+      "high_recall": 0.625,
+      "predicted_low": 26,
+      "actual_low": 24
+    },
+    "condition_only": {
+      "threshold": 2.0,
+      "accuracy": 0.85,
+      "low_recall": 0.7916666666666666,
+      "high_recall": 0.9375,
+      "predicted_low": 20,
+      "actual_low": 24
+    }
+  },
+  "within_confirmation_condition_centering": {
+    "note": "Post-hoc descriptive association using confirmation-set condition means; not a preregistered predictive estimand.",
+    "activation_metrics": {
+      "spearman": 0.6974989431036679,
+      "pearson": 0.8609695738585094,
+      "mae": 0.26148794774795203
+    },
+    "text_metrics": {
+      "spearman": 0.3952462476993252,
+      "pearson": 0.5260623918703291,
+      "mae": 0.4295296406368275
+    }
+  },
+  "development_fitted_condition_residual_comparison": {
+    "note": "Post-hoc crossing of prespecified components. Condition coefficients, activation probes, and text model are fit on development only; residual condition structure remains.",
+    "selected_residual_layer": 20,
+    "selected_residual_layer_activation_metrics": {
+      "spearman": 0.7564358536629499,
+      "pearson": 0.7697943573114893,
+      "mae": 0.3186464401134557
+    },
+    "primary_layer": 25,
+    "primary_layer_activation_metrics": {
+      "spearman": 0.693620270017102,
+      "pearson": 0.6120918942659008,
+      "mae": 0.369451276598679
+    },
+    "text_metrics": {
+      "spearman": 0.36308164161560796,
+      "pearson": 0.44348519803975445,
+      "mae": 0.4106402875784876
+    },
+    "selected_residual_layer_activation_over_text": {
+      "bootstrap_repeats": 50000,
+      "spearman_delta": {
+        "observed": 0.3933542120473419,
+        "bootstrap_95_percent_interval": [
+          0.11029886773647146,
+          0.6593566829600617
+        ],
+        "bootstrap_probability_above_zero": 0.99824
+      },
+      "pearson_delta": {
+        "observed": 0.3263091592717348,
+        "bootstrap_95_percent_interval": [
+          0.16419979078128646,
+          0.5620250876326921
+        ],
+        "bootstrap_probability_above_zero": 0.99964
+      },
+      "mae_improvement": {
+        "observed": 0.09199384746503186,
+        "bootstrap_95_percent_interval": [
+          0.00834903461565426,
+          0.1787873132838637
+        ],
+        "bootstrap_probability_above_zero": 0.9848
+      }
+    },
+    "primary_layer_activation_over_text": {
+      "bootstrap_repeats": 50000,
+      "spearman_delta": {
+        "observed": 0.33053862840149406,
+        "bootstrap_95_percent_interval": [
+          0.04048239147235991,
+          0.6319786691828502
+        ],
+        "bootstrap_probability_above_zero": 0.98946
+      },
+      "pearson_delta": {
+        "observed": 0.16860669622614638,
+        "bootstrap_95_percent_interval": [
+          0.00250361263364011,
+          0.5316394614158713
+        ],
+        "bootstrap_probability_above_zero": 0.97672
+      },
+      "mae_improvement": {
+        "observed": 0.041189010979808593,
+        "bootstrap_95_percent_interval": [
+          -0.028065219114581968,
+          0.10444632558836928
+        ],
+        "bootstrap_probability_above_zero": 0.88108
+      }
+    }
+  },
+  "residual_condition_contamination": {
+    "condition_residual_eta_squared": 0.17509326633037628,
+    "refusal_safety_residual_eta_squared": 0.19784775995423073
+  },
+  "high_resolution_paired_ladder_bootstrap": {
+    "bootstrap_repeats": 50000,
+    "spearman_delta": {
+      "observed": 0.04599311175710863,
+      "bootstrap_95_percent_interval": [
+        -0.010590695202697707,
+        0.13068409154847097
+      ],
+      "bootstrap_probability_above_zero": 0.95202
+    },
+    "pearson_delta": {
+      "observed": 0.1472668081144034,
+      "bootstrap_95_percent_interval": [
+        0.08403973401560084,
+        0.22955208495977975
+      ],
+      "bootstrap_probability_above_zero": 1.0
+    },
+    "mae_improvement": {
+      "observed": 0.3323386666489221,
+      "bootstrap_95_percent_interval": [
+        0.24192376339056032,
+        0.4273289517626165
+      ],
+      "bootstrap_probability_above_zero": 1.0
+    },
+    "spearman_probability_monte_carlo_standard_error": 0.0009558024858724737,
+    "note": "Models are held fixed; this covers evaluation-ladder resampling, not fitting or layer-selection variability."
+  },
+  "layer_robustness": {
+    "layers_above_text_confirmation_spearman": 21,
+    "total_layers": 27,
+    "best_confirmation_layer_post_hoc": 12,
+    "best_confirmation_spearman_post_hoc": 0.8938536563522907
+  },
+  "ceiling_counts": {
+    "development_exactly_3": 42,
+    "development_prompts": 120,
+    "confirmation_exactly_3": 13,
+    "confirmation_prompts": 40
+  },
+  "behavioral_response_cell": {
+    "status": "post_hoc_descriptive_count",
+    "thresholds": {
+      "substantive_engagement_max": 1,
+      "information_withholding_min": 2,
+      "explicit_refusal_language_max": 1
+    },
+    "matching_responses": 55,
+    "total_responses": 576,
+    "proportion": 0.0954861111111111,
+    "source_judge_files": [
+      "results\\round2_main\\run_round2\\judging_web\\aggregated\\judge_1.jsonl",
+      "results\\round2_main\\run_round2\\judging_web\\aggregated\\judge_2.jsonl",
+      "results\\round2_main\\run_round2\\judging_web\\aggregated\\judge_3.jsonl"
+    ],
+    "source_manual_scores": "results\\round2_main\\run_round2\\judging_web\\aggregated\\manual_scores.jsonl"
+  }
+}

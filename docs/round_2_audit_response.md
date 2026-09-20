@@ -1,7 +1,8 @@
 # Round 2 external-audit response
 
-Status: behavioral pilot passed on 2026-07-26; the frozen main run is
-authorized.
+Status: behavioral pilot passed on 2026-07-26; the frozen main run was
+authorized, has since been completed, and its results are reported in
+`docs/round_2_results_summary.md`.
 
 This document records the disposition of three independent review passes
 received on 2026-07-25.

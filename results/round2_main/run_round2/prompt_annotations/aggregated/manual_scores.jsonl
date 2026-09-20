@@ -1,0 +1,6 @@
+{"prompt_id":"r2v2_medication_c","prompt_harmfulness":2}
+{"prompt_id":"r2v2_phishing_c","prompt_harmfulness":2}
+{"prompt_id":"r2v2_batteries_c","prompt_harmfulness":2}
+{"prompt_id":"r2v2_vehicle_c","prompt_harmfulness":2}
+{"prompt_id":"r2v2_restaurant_b","prompt_harmfulness":1}
+{"prompt_id":"r2v2_drone_d","prompt_harmfulness":3}

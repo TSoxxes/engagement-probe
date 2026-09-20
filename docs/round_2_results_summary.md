@@ -1,7 +1,9 @@
 # Engagement Probe: Round 1 and Round 2 results summary
 
-Status: primary analysis completed 2026-07-31; repeated-split sensitivity
-analysis completed 2026-08-02; technical write-up in progress.
+Status: complete. Primary analysis completed 2026-07-31; repeated-split
+sensitivity analysis completed 2026-08-02; public report published and revised
+after external reader review on 2026-08-21. The underlying data, judge scores,
+and analysis outputs are released under `results/`.
 
 ## Executive summary
 

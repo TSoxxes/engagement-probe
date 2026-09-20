@@ -1,0 +1,159 @@
+{
+  "note": "Post-hoc descriptive analysis. Not part of the preregistered plan.",
+  "target": "substantive_engagement",
+  "variability_subset": {
+    "prompts": 32,
+    "observations": 192,
+    "generations_per_prompt": 6,
+    "var_between": 1.0278312923138193,
+    "var_within": 0.08553240740740742,
+    "between_sd": 1.0138201479127447,
+    "within_sd": 0.2924592405915864,
+    "within_share": 0.07682342026134292,
+    "icc_single_generation": 0.923176579738657,
+    "saturated": false,
+    "reliability_of_mean": {
+      "1_generations": 0.923176579738657,
+      "3_generations": 0.9730098775671778,
+      "6_generations": 0.9863203308104558
+    },
+    "max_attainable_correlation": {
+      "1_generations": 0.9608207844018868,
+      "3_generations": 0.9864126304783297,
+      "6_generations": 0.9931366123602814
+    }
+  },
+  "all_prompts": {
+    "prompts": 160,
+    "observations": 576,
+    "generations_per_prompt": "3-6",
+    "var_between": 1.2518207842727072,
+    "var_within": 0.0635238603988604,
+    "between_sd": 1.1188479719214346,
+    "within_sd": 0.25203940247282847,
+    "within_share": 0.048294460813897086,
+    "icc_single_generation": 0.9517055391861029,
+    "saturated": false,
+    "reliability_of_mean": {
+      "1_generations": 0.9517055391861029,
+      "3_generations": 0.9833663027693023,
+      "6_generations": 0.9916134013129734
+    },
+    "max_attainable_correlation": {
+      "1_generations": 0.9755539652864432,
+      "3_generations": 0.9916482757355565,
+      "6_generations": 0.9957978717154267
+    }
+  },
+  "condition_residual_variability_subset": {
+    "prompts": 32,
+    "observations": 192,
+    "generations_per_prompt": 6,
+    "var_between": 0.5622820008628701,
+    "var_within": 0.08553240740740742,
+    "between_sd": 0.7498546531581104,
+    "within_sd": 0.2924592405915864,
+    "within_share": 0.1320322708409444,
+    "icc_single_generation": 0.8679677291590556,
+    "saturated": false,
+    "reliability_of_mean": {
+      "1_generations": 0.8679677291590556,
+      "3_generations": 0.9517414526576186,
+      "6_generations": 0.9752741085266855
+    },
+    "max_attainable_correlation": {
+      "1_generations": 0.9316478568424099,
+      "3_generations": 0.975572371819548,
+      "6_generations": 0.9875596734003903
+    }
+  },
+  "condition_residual_all_prompts": {
+    "prompts": 160,
+    "observations": 576,
+    "generations_per_prompt": "3-6",
+    "var_between": 0.41199082365696776,
+    "var_within": 0.0635238603988604,
+    "between_sd": 0.6418651132885848,
+    "within_sd": 0.25203940247282847,
+    "within_share": 0.1335896924508063,
+    "icc_single_generation": 0.8664103075491937,
+    "saturated": false,
+    "reliability_of_mean": {
+      "1_generations": 0.8664103075491937,
+      "3_generations": 0.9511165527247764,
+      "6_generations": 0.9749459112491476
+    },
+    "max_attainable_correlation": {
+      "1_generations": 0.9308116391350044,
+      "3_generations": 0.9752520457424205,
+      "6_generations": 0.9873934936230578
+    }
+  },
+  "by_condition_all_prompts": {
+    "A": {
+      "prompts": 40,
+      "observations": 120,
+      "generations_per_prompt": 3,
+      "var_between": 0.0,
+      "var_within": 0.0,
+      "between_sd": 0.0,
+      "within_sd": 0.0,
+      "within_share": null,
+      "icc_single_generation": null,
+      "saturated": true
+    },
+    "B": {
+      "prompts": 40,
+      "observations": 168,
+      "generations_per_prompt": "3-6",
+      "var_between": 0.7967395640938401,
+      "var_within": 0.09519675925925929,
+      "between_sd": 0.8926026910635213,
+      "within_sd": 0.3085397207155981,
+      "within_share": 0.10673044338118388,
+      "icc_single_generation": 0.8932695566188161,
+      "saturated": false
+    },
+    "C": {
+      "prompts": 40,
+      "observations": 144,
+      "generations_per_prompt": "3-6",
+      "var_between": 0.4684138007054674,
+      "var_within": 0.09099002849002852,
+      "between_sd": 0.6844076275915307,
+      "within_sd": 0.30164553451033965,
+      "within_share": 0.16265535511418544,
+      "icc_single_generation": 0.8373446448858146,
+      "saturated": false
+    },
+    "D_capability": {
+      "prompts": 20,
+      "observations": 75,
+      "generations_per_prompt": "3-6",
+      "var_between": 0.03214632197683045,
+      "var_within": 0.05420875420875421,
+      "between_sd": 0.17929395410004892,
+      "within_sd": 0.23282773505051801,
+      "within_share": 0.6277425323817076,
+      "icc_single_generation": 0.3722574676182923,
+      "saturated": false
+    },
+    "D_harmful_request": {
+      "prompts": 20,
+      "observations": 69,
+      "generations_per_prompt": "3-6",
+      "var_between": 0.5952582514487279,
+      "var_within": 0.03665910808767952,
+      "between_sd": 0.7715298124173349,
+      "within_sd": 0.19146568383833046,
+      "within_share": 0.05801250358840227,
+      "icc_single_generation": 0.9419874964115978,
+      "saturated": false
+    }
+  },
+  "judge_disagreement_pre_adjudication": {
+    "mean_sd_across_three_judges": 0.23340227248702788,
+    "share_of_responses_with_unanimous_score": 0.6128472222222222,
+    "share_with_range_above_one_point": 0.020833333333333332
+  }
+}

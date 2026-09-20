@@ -4,19 +4,19 @@
 
 The research repository owns the authoritative report assets:
 
-- `report/willingness_probe_report_v3.html`
-- `output/pdf/willingness_probe_report.pdf`
+- `report/engagement_probe_report_v3.html`
+- `output/pdf/engagement_probe_report.pdf`
 
 The public report is hosted through GitHub Pages at
-<https://tsoxxes.github.io/willingness-probe-report/>. Its source is the
-separate `TSoxxes/willingness-probe-report` repository. A local checkout may be
+<https://tsoxxes.github.io/engagement-probe-report/>. Its source is the
+separate `TSoxxes/engagement-probe-report` repository. A local checkout may be
 placed at `public-report-pages/`; the outer repository ignores that directory
 so the two Git histories do not overlap.
 
 The files below are deployment copies and must not be edited directly:
 
 - `public-report-pages/index.html`
-- `public-report-pages/willingness_probe_report.pdf`
+- `public-report-pages/engagement_probe_report.pdf`
 
 ## Update workflow
 
@@ -39,5 +39,5 @@ The files below are deployment copies and must not be edited directly:
    updates the existing public URL without changing it.
 
 The sync command fails clearly when the deployment checkout is missing or its
-`origin` remote is not `TSoxxes/willingness-probe-report`. Use `--site-dir` if
+`origin` remote is not `TSoxxes/engagement-probe-report`. Use `--site-dir` if
 the standalone repository is checked out somewhere else.
