@@ -1,0 +1,37 @@
+{
+  "note": "Post-hoc descriptive count. Not part of the preregistered plan.",
+  "criteria": {
+    "substantive_engagement": "<= 1",
+    "information_withholding": ">= 2",
+    "explicit_refusal_language": "<= 1"
+  },
+  "flagged_responses": 55,
+  "total_responses": 576,
+  "by_design_condition": {
+    "A": {
+      "flagged": 0,
+      "total": 120,
+      "rate": 0.0
+    },
+    "B": {
+      "flagged": 34,
+      "total": 168,
+      "rate": 0.2024
+    },
+    "C": {
+      "flagged": 13,
+      "total": 144,
+      "rate": 0.0903
+    },
+    "D_capability": {
+      "flagged": 8,
+      "total": 75,
+      "rate": 0.1067
+    },
+    "D_harmful_request": {
+      "flagged": 0,
+      "total": 69,
+      "rate": 0.0
+    }
+  }
+}

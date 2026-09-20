@@ -1,123 +1,100 @@
-# Willingness Probe — Free Pilot Prototype
+# Engagement Probe
 
-This repository is a small, runnable proof of concept for one question:
+**Can a language model's internal state, read after it sees a prompt but before
+it writes a single token, predict how fully it will answer?**
 
-> Among responses that still answer the user, can a model's pre-answer
-> activations predict how fully it engages with the request?
+Most evaluations score what a model chose to show us. A refusal check only
+catches the cases where the model announces itself. This project measures
+something a refusal check walks straight past: how *substantively* a request was
+met, graded on a 0–3 scale, predicted from the model's pre-answer activations.
 
-It intentionally does **not** claim that the model has a distinct "willingness"
-mechanism. The pilot only checks whether a candidate engagement signal is worth
-studying further.
+In this study's own 576 responses, **55 gave little of substance and withheld
+most of what was asked while using little or no refusal language** — and none of
+those 55 were on harmful prompts. They were ordinary requests, quietly
+under-answered.
 
-Round 1 is complete. Round 2 is frozen after a successful behavioral pilot,
-with 40 ladders, a locked
-confirmation split, revised behavioral targets, variable prespecified
-generation counts, three independent judges, text-leakage controls, and
-activation-over-text incremental analysis. It predicts prompt-conditioned
-response behavior rather than claiming a prompt-independent willingness
-variable. The full Round 2 generation is authorized against the frozen
-protocol. See:
+📄 **[Read the short report](https://tsoxxes.github.io/willingness-probe-report/)**
+(~15 minutes, written for a general technical audience) ·
+[PDF](output/pdf/willingness_probe_report.pdf)
 
-- `docs/round_1_report.md`
-- `docs/round_2_audit_response.md`
-- `docs/round_2_freeze_manifest.json`
-- `docs/round_2_pilot_report.md`
-- `docs/round_2_protocol.md`
-- `docs/round_2_workflow.md`
-- `docs/design_review_response.md`
-- `docs/project_roadmap.md`
+---
 
-## What is included
+## The result, stated honestly
 
-- 24 prompts: 6 matched ladders × 4 rungs
-- Three ladder categories: safety, professional advice, harmless uncertainty
-- Gemma-2-2B-it generation on a free Kaggle GPU
-- Residual-stream snapshots from every layer at the final prompt token
-- A ready-to-paste rubric for two independent frontier-model judges
-- Per-layer ridge probes with leave-one-ladder-out evaluation
-- Shuffled-label, response-length, and token-cap baselines
+Two preregistered rounds on `google/gemma-2-2b-it`. Round 2 locked the protocol,
+dataset hashes, rubric, and analysis code — with recorded SHA-256 checksums —
+before a single main-study response was generated. Ten of 40 subject areas were
+held back untouched until a one-time confirmation analysis.
 
-## Repository layout
+On that untouched confirmation set:
 
-```text
-willingness-probe/
-  data/
-    ladders.jsonl
-    round2_ladders.jsonl
-    round2_pilot_prompts.jsonl
-    round2_prompt_audit.json
-    judge_scores.example.jsonl
-  docs/
-    round_1_report.md
-    round_2_audit_response.md
-    round_2_freeze_manifest.json
-    round_2_pilot_report.md
-    round_2_protocol.md
-    round_2_workflow.md
-    design_review_response.md
-    project_roadmap.md
-  scoring/
-    JUDGING_WORKFLOW.md
-    batch_judge_prompt.md
-    judge_prompt.md
-    round2_batch_judge_prompt.md
-    round2_prompt_annotation_prompt.md
-  src/
-    aggregate_judging.py
-    aggregate_prompt_annotations.py
-    analyze_round2.py
-    audit_round2_prompts.py
-    build_round2_dataset.py
-    check_round2_pilot.py
-    generation_utils.py
-    generate.py
-    analyze.py
-    prepare_prompt_annotations.py
-    prepare_judging.py
-    scoring_schema.py
-    text_features.py
-  results/
-  scripts/
-    sync_public_report_site.py
-  tests/
-    make_smoke_fixture.py
-    test_generation_utils.py
-    test_judging_pipeline.py
-    test_round2_pipeline.py
-  requirements.txt
-  README.md
-```
+| Predictor | Spearman | Pearson | MAE (0–3 scale) |
+|---|---:|---:|---:|
+| **Pre-answer activations** (layer 25) | **0.868** | **0.949** | **0.283** |
+| Sparse prompt text (TF-IDF) | 0.822 | 0.802 | 0.615 |
+| Judge-rated refusal language + safety framing | 0.827 | 0.790 | 0.533 |
+| Response length | 0.766 | 0.910 | 0.367 |
+| Token-cap rate | 0.190 | 0.236 | 1.047 |
 
-## Public short-report site
+The preregistered primary test was whether activations *beat prompt wording* on
+rank correlation. The observed advantage was **+0.046**, with a paired
+ladder-bootstrap interval of **−0.014 to +0.130**. That interval crosses zero,
+so under the rule committed to in advance, **the primary result is
+inconclusive** — and that is how it is reported, here and in the public report.
 
-The master short report is `report/willingness_probe_report_v3.html`, and its
-master PDF is `output/pdf/willingness_probe_report.pdf`. The public URL is
-<https://tsoxxes.github.io/willingness-probe-report/>, deployed from the
-separate `TSoxxes/willingness-probe-report` GitHub repository. A local checkout
-of that repository belongs at `public-report-pages/`; do not edit its report
-copies directly.
+Two prespecified secondary measures clearly favoured activations (Pearson +0.147,
+interval +0.082 to +0.228; MAE improvement +0.332, interval +0.241 to +0.428),
+and a post-hoc 200-split stability check found all 200 splits positive with a
+median advantage of +0.077. Neither rescues the primary test, and neither is
+presented as doing so.
 
-Synchronize the deployment checkout from the master files with:
+### What this does not show
 
-```powershell
-python scripts/sync_public_report_site.py
-```
+- No universal or model-independent engagement representation
+- No causal mechanism — a predictive probe cannot show the direction *does*
+  anything
+- No independence from prompt wording: sparse text identifies the intended
+  design cell with 97.5% leave-one-ladder-out accuracy
+- No reliable separation of "cannot answer" from "chooses not to answer"
+- Engagement and withholding scores came out near mirror images (r = −0.95), and
+  longer answers scored higher, so "said more" and "said it at greater length"
+  are not cleanly separated
 
-Use `--check` to verify that the two repositories agree without changing
-files. The sync command refuses to operate on a different Git remote. The full
-publishing workflow is documented in `docs/public_report_publishing.md`.
+That last point is the most load-bearing weakness, and it is what the next study
+is designed to settle first. See [`docs/project_roadmap.md`](docs/project_roadmap.md).
 
-## Local checks
+## How it was measured
 
-The regression tests do not download or load Gemma:
+For every prompt, the model's representation of the **final prompt token** is
+saved at 27 internal indices — the embedding output and every transformer layer
+— each 2,304 values wide, recorded *before the first answer token exists*. A
+linear ridge probe predicts a prompt-level behavioural score from those values,
+evaluated leave-one-subject-area-out.
+
+Because the snapshot is taken before generation, it is identical for every
+sampled answer to a prompt. The analysis therefore averages judge scores and
+response length across generations before fitting. It does not pretend a
+pre-generation snapshot can explain random variation between sampled answers.
+
+Labels come from **three independent LLM judge families**, 1,728 blinded ratings,
+with opaque case IDs and three independently ordered passes per judge. Every
+dimension where judges disagreed by more than one point went to documented
+case-by-case adjudication — 209 responses reviewed. Deviations are recorded in
+[`results/round2_main/run_round2/judging_web/PROTOCOL_DEVIATIONS.md`](results/round2_main/run_round2/judging_web/PROTOCOL_DEVIATIONS.md).
+
+Every label in this project comes from LLM judges. Human-rater validation of
+those judges has not been done, and it is the most common objection the work has
+received.
+
+## Try it in two minutes
 
 ```bash
-python src/build_round2_dataset.py
-python src/audit_round2_prompts.py
-python -m unittest discover -s tests -v
+pip install numpy pandas matplotlib
+python -m unittest discover -s tests
 ```
 
-To exercise the complete analysis path with tiny synthetic activations:
+24 tests, no model download, no GPU. To exercise the full analysis path on tiny
+synthetic activations:
 
 ```bash
 python tests/make_smoke_fixture.py
@@ -130,27 +107,67 @@ python src/analyze.py \
     --output-dir tests/smoke_output
 ```
 
-## Important measurement detail
+To rebuild and re-audit the Round 2 prompt set from its generating source:
 
-The activation is recorded at the last token of the fully formatted chat prompt,
-immediately before generation begins. It is therefore the same for all sampled
-answers to a prompt. The analysis averages judge scores and response length
-across generations before fitting a probe. It does not pretend that a
-pre-generation snapshot can explain random differences between sampled answers.
+```bash
+python src/build_round2_dataset.py
+python src/audit_round2_prompts.py
+```
 
-## Run on Kaggle
+## Inspect the actual data
 
-### 1. Prepare model access
+The Round 2 responses, judge scores, and analysis outputs are committed under
+[`results/`](results/README.md) — 576 responses, 1,728 ratings, and every
+reported number. That directory's README explains what is there, what is not
+(the 18 MB activation tensor, available on request), and how to check the
+headline figures yourself.
 
-Gemma-2-2B-it is gated on Hugging Face:
+## Repository layout
 
-1. Accept the model terms on the Hugging Face model page.
-2. Create a read token.
-3. In Kaggle, add it as a secret named `HF_TOKEN`.
-4. Turn on a T4 GPU and internet access for the notebook.
+```text
+data/           Prompt sets. round2_ladders.jsonl is the frozen Round 2 set.
+docs/           Protocol, reports, audit responses, roadmap. Start with
+                round_2_results_summary.md.
+report/         Master HTML short report (v3 is current).
+output/pdf/     Master PDF of the short report.
+results/        Released Round 2 artifacts — see results/README.md.
+scoring/        Judge rubrics and the judging workflow.
+src/            Generation, judging aggregation, and analysis entry points.
+scripts/        Publishing helper for the separate report site.
+tests/          Regression tests. No model download required.
+```
 
-Upload this repository as a Kaggle dataset or clone it into the notebook
-session. In a notebook cell, expose the secret without printing it:
+### Key documents
+
+| Document | What it is |
+|---|---|
+| [`docs/round_2_results_summary.md`](docs/round_2_results_summary.md) | The technical write-up. Read this first. |
+| [`docs/round_2_protocol.md`](docs/round_2_protocol.md) | The preregistered protocol |
+| [`docs/round_2_freeze_manifest.json`](docs/round_2_freeze_manifest.json) | SHA-256 checksums recorded at freeze time |
+| [`docs/round_2_audit_response.md`](docs/round_2_audit_response.md) | Response to external design review |
+| [`docs/design_review_response.md`](docs/design_review_response.md) | Response to the review brief |
+| [`docs/round2_repeated_split_sensitivity_report.md`](docs/round2_repeated_split_sensitivity_report.md) | The 200-split stability analysis |
+| [`docs/round_1_report.md`](docs/round_1_report.md) | Round 1, including its ceiling-saturation failure |
+| [`docs/project_roadmap.md`](docs/project_roadmap.md) | What is next and why |
+
+### Main analysis entry points
+
+| Script | Purpose |
+|---|---|
+| `src/generate.py` | Generation + all-layer activation capture |
+| `src/analyze_round2.py` | The locked confirmatory analysis |
+| `src/analyze_round2_multisplit.py` | Repeated-split sensitivity |
+| `src/analyze_round2_length.py` | Response-length confound diagnostics |
+| `src/analyze_round2_reliability.py` | Inter-judge reliability |
+| `src/prepare_judging.py` / `src/aggregate_judging.py` | Blinded judging pipeline |
+
+## Reproducing the generation run
+
+Generation needs a GPU and gated model access; everything else does not.
+
+Gemma-2-2B-it is gated on Hugging Face: accept the model terms, create a read
+token, and add it in Kaggle as a secret named `HF_TOKEN`. Turn on a T4 GPU and
+internet access. Then, in a notebook cell, expose the secret without printing it:
 
 ```python
 import os
@@ -158,130 +175,45 @@ from kaggle_secrets import UserSecretsClient
 os.environ["HF_TOKEN"] = UserSecretsClient().get_secret("HF_TOKEN")
 ```
 
-### 2. Install the small dependency set
-
-From the repository directory:
+Install dependencies and run:
 
 ```python
 !pip install -q -r requirements.txt
-```
-
-Restart the notebook kernel if Kaggle asks you to after installation.
-
-### 3. Generate responses and capture activations
-
-```python
 !python src/generate.py \
-    --dataset data/ladders.jsonl \
-    --output-dir results/run_main \
-    --num-generations 4 \
-    --max-new-tokens 600 \
+    --dataset data/round2_ladders.jsonl \
+    --output-dir results/run_round2 \
+    --generation-count-field generation_count \
+    --num-generations 3 \
+    --max-new-tokens 800 \
     --temperature 0.7
 ```
 
-The script uses float16 on a Kaggle T4 and bfloat16 on GPUs with native support.
-It stops on the model's complete EOS configuration, including Gemma's
-`<end_of_turn>` token. Expected outputs:
+`--generation-count-field` makes each prompt use the prespecified
+`generation_count` from the frozen dataset (3 for most, 6 for the
+variability subset); `--num-generations` is the fallback for prompts without
+one. Omitting the field flag silently gives every prompt the same count and
+will not reproduce the published run.
 
-- `results/run_main/responses.jsonl`
-- `results/run_main/activations.npz`
-- `results/run_main/run_config.json`
+The script uses float16 on a T4 and bfloat16 where natively supported, and stops
+on Gemma's complete EOS configuration including `<end_of_turn>`. It writes
+`responses.jsonl`, `activations.npz`, and `run_config.json`. Every response
+records `finish_reason` and `hit_token_cap`; 11 of 576 hit the 800-token ceiling
+in the main run. The activation file is shaped
+`[prompts, embedding + transformer layers, hidden size]`.
 
-Every response records `finish_reason` (`eos`, `length`, or `other`) and a
-boolean `hit_token_cap`. The run configuration summarizes those outcomes.
+Scoring and analysis then follow [`docs/round_2_workflow.md`](docs/round_2_workflow.md)
+and [`scoring/JUDGING_WORKFLOW.md`](scoring/JUDGING_WORKFLOW.md). The private
+case-ID mapping and all experimental metadata must stay hidden from judges.
 
-The activation file stores float16 arrays shaped:
+## How this project was built
 
-```text
-[number of prompts, embedding plus transformer layers, hidden size]
-```
+This is a human-directed, LLM-assisted project, and the public report says so
+explicitly — including which parts of the protocol, rubric, and interpretation
+were human decisions and which drafting and coding was model-assisted. Three
+separate model families supplied the judge scores.
 
-### 4. Score the responses
+## License
 
-The recommended workflow uses two judge models, three independently ordered
-passes per judge, opaque case IDs, and automatic within- and cross-judge
-disagreement checks.
-
-Prepare the six blinded packets:
-
-```bash
-python src/prepare_judging.py \
-    --responses results/run_main/responses.jsonl \
-    --output-dir results/run_main/judging
-```
-
-Give each packet to its assigned model in a fresh conversation using
-`scoring/batch_judge_prompt.md`, save the six raw outputs, and aggregate them:
-
-```bash
-python src/aggregate_judging.py \
-    --mapping results/run_main/judging/private_mapping.jsonl \
-    --raw-scores-dir results/run_main/judging/raw_scores \
-    --output-dir results/run_main/judging/aggregated
-```
-
-Follow `scoring/JUDGING_WORKFLOW.md` for exact collection, validation,
-within-judge adjudication, and cross-judge adjudication steps. The private
-mapping and all experimental metadata must remain hidden from judges.
-
-### 5. Fit and evaluate the probes
-
-```python
-!python src/analyze.py \
-    --dataset data/ladders.jsonl \
-    --responses results/run_main/responses.jsonl \
-    --activations results/run_main/activations.npz \
-    --run-config results/run_main/run_config.json \
-    --judge-files \
-      results/run_main/judging/aggregated/judge_1.jsonl \
-      results/run_main/judging/aggregated/judge_2.jsonl \
-    --manual-scores results/run_main/judging/aggregated/manual_scores.jsonl \
-    --output-dir results/run_main/analysis
-```
-
-Omit `--manual-scores` if no manual corrections are needed.
-
-Main outputs:
-
-- `metrics_by_layer.csv`: held-out predictions summarized at every layer
-- `predictions.csv`: every held-out prediction
-- `best_layer_summary.json`: the strongest real-label layer
-- `judge_disagreements.csv`: cases needing manual review
-- `generation_diagnostics.json`: token-cap rates by prompt and category
-- `probe_curve.png`: engagement probe versus all sensitivity baselines
-
-The primary metric is held-out Spearman correlation. The plot compares the
-activation probe with shuffled labels, response length, and token-cap rate.
-With only six ladders this is a feasibility signal, not a stable scientific
-estimate.
-
-## Observed pilot diagnostics
-
-The corrected `run_003` pilot produced all 96 expected responses and finite
-activations. Twenty-three responses (24.0%) reached the uniform 600-token
-ceiling. The capped responses were long, on-topic, and showed no obvious
-repetitive degeneration, but most ended mid-list or mid-sentence. They were
-concentrated in professional-advice and harmless-uncertainty prompts, with none
-in the safety category. For that reason, token-cap rate is retained as an
-explicit sensitivity baseline rather than silently treated as ordinary EOS.
-
-## What counts as a useful result
-
-A promising pilot would show that activation-based predictions outperform both
-baselines on entirely unseen ladders. It would still **not** establish a new
-mechanism: this prototype does not yet project out refusal, harmfulness, or
-uncertainty directions, and it does not include causal steering.
-
-A null result is also useful. It may mean the behavior is not stable, the small
-model is too crude, or the apparent signal is mostly topic or response length.
-
-## Scope deliberately left out
-
-- No steering intervention
-- No second model family
-- No API automation for judges
-- No hyperparameter search
-- No claim of statistical significance
-- No attempt to identify model experience or preferences
-
-Those belong after this end-to-end pipeline has run successfully.
+[MIT](LICENSE). Generations under `results/` are outputs of
+`google/gemma-2-2b-it` and are also subject to the
+[Gemma Terms of Use](https://ai.google.dev/gemma/terms).

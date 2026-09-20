@@ -1,0 +1,90 @@
+{
+  "analysis_status": "post_hoc_sensitivity",
+  "specification": "docs/round2_repeated_split_sensitivity_spec.md",
+  "seed": 20260802,
+  "repeated_splits": 200,
+  "development_ladders_per_split": 30,
+  "evaluation_ladders_per_split": 10,
+  "activation_alpha": 10.0,
+  "text_alpha": 1.0,
+  "original_split": {
+    "selected_layer": 25,
+    "development_selected_layer_spearman": 0.9410296162941632,
+    "evaluation_ladders": "[\"r2_appliance\", \"r2_camping\", \"r2_childcare\", \"r2_copyright\", \"r2_cryptocurrency\", \"r2_data_privacy\", \"r2_drone\", \"r2_food_safety\", \"r2_immigration\", \"r2_pet_health\"]",
+    "activation_spearman": 0.8679406973373708,
+    "text_spearman": 0.8219475855802622,
+    "spearman_delta": 0.04599311175710863,
+    "activation_pearson": 0.949002997133173,
+    "text_pearson": 0.8017361890187696,
+    "pearson_delta": 0.1472668081144034,
+    "activation_mae": 0.282794067221278,
+    "text_mae": 0.6151327338702001,
+    "mae_improvement": 0.3323386666489221,
+    "split_id": "original"
+  },
+  "repeated_split_spearman_delta": {
+    "mean": 0.0805781604609337,
+    "standard_deviation": 0.03472778667069882,
+    "minimum": 0.004737132317552684,
+    "percentile_2_5": 0.02080626141163235,
+    "percentile_25": 0.0555562774130649,
+    "median": 0.07736302228627395,
+    "percentile_75": 0.10378095343518168,
+    "percentile_97_5": 0.15086889074088258,
+    "maximum": 0.16683833856206642,
+    "fraction_above_zero": 1.0,
+    "fraction_at_or_below_original": 0.165
+  },
+  "repeated_split_pearson_delta": {
+    "mean": 0.10643365258619708,
+    "standard_deviation": 0.03325260984218247,
+    "minimum": 0.0219293836923887,
+    "percentile_2_5": 0.05162778151156974,
+    "percentile_25": 0.08330592724540808,
+    "median": 0.1073398005930023,
+    "percentile_75": 0.12643446578450604,
+    "percentile_97_5": 0.17608469349671374,
+    "maximum": 0.2020891493014017,
+    "fraction_above_zero": 1.0
+  },
+  "repeated_split_mae_improvement": {
+    "mean": 0.28159198112351697,
+    "standard_deviation": 0.05862010392049232,
+    "minimum": 0.1310801350021358,
+    "percentile_2_5": 0.18533106389538329,
+    "percentile_25": 0.23961049690861802,
+    "median": 0.2782143401384442,
+    "percentile_75": 0.31678404716468417,
+    "percentile_97_5": 0.4034598752233497,
+    "maximum": 0.4353633910670607,
+    "fraction_above_zero": 1.0
+  },
+  "crossfitted_aggregate_metrics": {
+    "activation_spearman": 0.9281538546842264,
+    "text_spearman": 0.8483137731941954,
+    "spearman_delta": 0.07984008149003097,
+    "activation_pearson": 0.9538683767784815,
+    "text_pearson": 0.8476898051002634,
+    "pearson_delta": 0.10617857167821809,
+    "activation_mae": 0.2345360128765019,
+    "text_mae": 0.5401997666912939,
+    "mae_improvement": 0.305663753814792
+  },
+  "crossfitted_evaluation_count": {
+    "minimum": 38,
+    "mean": 50.0,
+    "maximum": 65
+  },
+  "layer_selection_counts": {
+    "17": 3,
+    "18": 60,
+    "19": 23,
+    "20": 41,
+    "21": 1,
+    "22": 10,
+    "23": 33,
+    "24": 1,
+    "25": 28
+  },
+  "interpretation_constraint": "Overlapping repeated splits are a descriptive stability diagnostic, not a confidence interval, p-value, or confirmatory test."
+}

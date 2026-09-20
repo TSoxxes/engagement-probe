@@ -1,0 +1,40 @@
+{
+  "validated_on": "2026-07-27",
+  "status": "passed",
+  "zip_sha256": "0A834F8DA796DA81AA18599743F3293F978B9C88A41CAA962DAA8E6FC9DA562E",
+  "files": {
+    "run_round2/activations.npz": "11000E6EE9002318660F597F0019CF690EFD1E7D6DD107CC115BC5564CA9BAD6",
+    "run_round2/responses.jsonl": "EE01D16178A40F1584B78E0572532B4E8A07BB36A47DE24335878AD17551302F",
+    "run_round2/run_config.json": "50306AC50E6D63574C8065801CA603C6C856E56F474C537068D0A403D8BBA8EF"
+  },
+  "model": "google/gemma-2-2b-it",
+  "prompts": 160,
+  "responses": 576,
+  "activation_shape": [
+    160,
+    27,
+    2304
+  ],
+  "activation_dtype": "float16",
+  "finish_reasons": {
+    "eos": 565,
+    "length": 11,
+    "other": 0
+  },
+  "capped_response_rate": 0.019097222222222224,
+  "capped_prompts": 7,
+  "response_token_range": [
+    6,
+    800
+  ],
+  "response_token_median": 365.5,
+  "checks": {
+    "frozen_prompt_ids_match": true,
+    "frozen_prompt_text_matches": true,
+    "per_prompt_generation_counts_match": true,
+    "response_keys_unique": true,
+    "run_configuration_matches_protocol": true,
+    "activation_values_finite": true,
+    "activation_prompt_order_matches_dataset": true
+  }
+}

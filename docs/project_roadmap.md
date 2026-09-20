@@ -155,6 +155,13 @@ This track informs later design but does not alter Round 2.
 
 Round 3 should be separately preregistered after Round 2 results are known.
 
+The first Round 3 study is scoped deliberately narrowly. It prioritizes a
+length-controlled replication on a 7-9B model — testing whether the engagement
+signal survives once requested answer length is manipulated independently of
+substance — before any causal steering work. Round 2 could not separate "said
+more" from "said it at greater length", and that ambiguity is the single most
+load-bearing weakness in the current result, so it is settled first.
+
 ### Causal harness
 
 - Pilot a published refusal-direction procedure on the same open-weight model
@@ -262,46 +269,6 @@ only after confirming that the rare behavioral cells are populated.
 
 The original Engagement Probe Review Brief should be archived beside
 `docs/design_review_response.md` so readers can assess the response fairly.
-
-## Funding roadmap
-
-### Immediate BlueDot request
-
-BlueDot Impact's Rapid Grants program currently supports concrete AI-safety
-projects, including compute, API credits, research access, and project tooling.
-The public program page lists grants from $50 to $10,000:
-
-- Program and application route:
-  https://bluedot.org/programs/rapid-grants
-- Technical AI Safety Project Sprint form for eligible current or past
-  participants:
-  https://airtable.com/appMVNtdBtvtJvu5E/pag9G3oF4DYAyassX/form
-
-Links verified on 2026-07-27.
-
-The first request should fund a specific bottleneck rather than general project
-support:
-
-1. three-model API judging for the next controlled prompt set;
-2. checklist drafting, prompt annotation, and independent LLM adjudication;
-3. a small 7–9B cross-model pilot;
-4. limited compute/API costs for the positive-control steering harness; and
-5. result hosting or research tooling if directly required.
-
-The application should include an itemized token and compute estimate. Current
-free Kaggle capacity means GPU spending is not the primary Round 2 bottleneck;
-that conclusion should be revisited for larger-model or steering experiments.
-
-### Evidence to include
-
-- Round 1 completed findings
-- Passed Round 2 behavioral pilot
-- Frozen protocol and recorded hashes
-- Exact next experiment and decision rule
-- Existing code and reproducible workflow
-- Requested amount tied to judge calls, model scale, and concrete deliverables
-- A short explanation of how the work improves evaluation integrity without
-  claiming that internal probes uniquely reveal model intent
 
 ## Change control
 

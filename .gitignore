@@ -2,6 +2,28 @@ __pycache__/
 *.py[cod]
 results/*
 !results/.gitkeep
+!results/README.md
+
+# Released Round 2 artifacts (see results/README.md). Everything needed to
+# reproduce the published numbers is published here. The 18 MB activation
+# tensor, the blinded judging packets, and the raw per-pass judge transcripts
+# stay local -- they are bulk or process material, not results.
+!results/round2_main/
+results/round2_main/*
+!results/round2_main/validation_summary.json
+!results/round2_main/run_round2/
+results/round2_main/run_round2/*
+!results/round2_main/run_round2/responses.jsonl
+!results/round2_main/run_round2/run_config.json
+!results/round2_main/run_round2/analysis/
+!results/round2_main/run_round2/judging_web/
+results/round2_main/run_round2/judging_web/*
+!results/round2_main/run_round2/judging_web/aggregated/
+!results/round2_main/run_round2/judging_web/manifest.json
+!results/round2_main/run_round2/judging_web/PROTOCOL_DEVIATIONS.md
+!results/round2_main/run_round2/prompt_annotations/
+results/round2_main/run_round2/prompt_annotations/*
+!results/round2_main/run_round2/prompt_annotations/aggregated/
 tests/smoke_fixture/
 tests/smoke_output/
 tests/judging_test_workspace/
@@ -11,3 +33,9 @@ tests/judging_test_workspace/
 public-report-pages/
 report/willingness_probe_report.html
 report/willingness_probe_report_v2.html
+
+# Funding-application and outreach drafts. These are private working documents
+# (budgets, applicant details, post drafts) and are deliberately not published
+# with the research code. They remain on disk locally.
+docs/bluedot_*
+docs/round_3_bluedot_*

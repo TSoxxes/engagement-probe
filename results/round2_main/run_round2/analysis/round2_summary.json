@@ -1,0 +1,119 @@
+{
+  "protocol": "round2",
+  "development_prompts": 120,
+  "confirmation_prompts": 40,
+  "development_ladders": 30,
+  "confirmation_ladders": 10,
+  "primary_target": "substantive_engagement",
+  "primary_selected_layer": 25,
+  "primary_confirmation_metrics": {
+    "spearman": 0.8679406973373708,
+    "pearson": 0.949002997133173,
+    "mae": 0.2827940672212783
+  },
+  "primary_confirmatory_estimand": "activation_minus_sparse_text_confirmation_performance",
+  "primary_activation_over_text": {
+    "bootstrap_repeats": 2000,
+    "spearman_delta": {
+      "observed": 0.04599311175710863,
+      "bootstrap_95_percent_interval": [
+        -0.014423933416647,
+        0.12967820197968258
+      ],
+      "bootstrap_probability_above_zero": 0.944
+    },
+    "pearson_delta": {
+      "observed": 0.1472668081144034,
+      "bootstrap_95_percent_interval": [
+        0.0822546678726021,
+        0.22764137588200853
+      ],
+      "bootstrap_probability_above_zero": 1.0
+    },
+    "mae_improvement": {
+      "observed": 0.332338666648922,
+      "bootstrap_95_percent_interval": [
+        0.2408777899690871,
+        0.42809939667618296
+      ],
+      "bootstrap_probability_above_zero": 1.0
+    }
+  },
+  "primary_confirmation_target_range": [
+    0.0,
+    3.0
+  ],
+  "primary_confirmation_prediction_range": [
+    0.0018815503336502282,
+    3.530832673908256
+  ],
+  "primary_confirmation_classification": {
+    "threshold": 2.0,
+    "low_engagement_prompts": 24,
+    "accuracy": 0.95,
+    "low_engagement_recall": 0.9583333333333334,
+    "high_engagement_recall": 0.9375
+  },
+  "development_shuffled_spearman_at_selected_layer": {
+    "mean": -0.028891805292183943,
+    "standard_deviation": 0.103560971290147,
+    "repeats": 20
+  },
+  "response_length_confirmation_metrics": {
+    "spearman": 0.7663687719291433,
+    "pearson": 0.9104456019110162,
+    "mae": 0.3670667919139369
+  },
+  "token_cap_confirmation_metrics": {
+    "spearman": 0.19036169063027236,
+    "pearson": 0.23622250818752502,
+    "mae": 1.0467102342102343
+  },
+  "nuisance_only_confirmation_metrics": {
+    "spearman": 0.8267035240761504,
+    "pearson": 0.7895949196880315,
+    "mae": 0.5329700270710902
+  },
+  "text_only_development_lolo_metrics": {
+    "spearman": 0.838555728390619,
+    "pearson": 0.8394490216142764,
+    "mae": 0.5441113722351578
+  },
+  "text_only_confirmation_metrics": {
+    "spearman": 0.8219475855802622,
+    "pearson": 0.8017361890187696,
+    "mae": 0.6151327338702003
+  },
+  "condition_residual_selected_layer": 20,
+  "condition_residual_confirmation_metrics": {
+    "spearman": 0.7564358536629499,
+    "pearson": 0.7697943573114896,
+    "mae": 0.3186464401134557
+  },
+  "development_engagement_withholding_pearson": -0.9482352312975382,
+  "withholding_adjusted_analysis_identifiable": false,
+  "prompt_harmfulness_confirmation_metrics": {
+    "spearman": 0.41340155945419094,
+    "pearson": 0.4633826562014795,
+    "mae": 0.892683037273702
+  },
+  "residual_engagement_selected_layer": 22,
+  "residual_engagement_confirmation_metrics": {
+    "spearman": 0.7575302918150496,
+    "pearson": 0.8119440845435577,
+    "mae": 0.30801783176874187
+  },
+  "no_capped_generation_sensitivity": {
+    "prompts": 38,
+    "spearman": 0.8635828419346144,
+    "pearson": 0.9455614030077617,
+    "mae": 0.29130477454252407
+  },
+  "max_new_tokens": 800,
+  "total_responses": 576,
+  "capped_responses": 11,
+  "ridge_alpha": 10.0,
+  "shuffle_repeats": 20,
+  "bootstrap_repeats": 2000,
+  "confirmation_used_for_layer_selection": false
+}

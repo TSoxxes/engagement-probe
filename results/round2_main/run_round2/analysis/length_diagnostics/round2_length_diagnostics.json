@@ -1,0 +1,327 @@
+{
+  "status": "post_hoc_response_length_diagnostics",
+  "does_not_replace_frozen_analysis": true,
+  "frozen_prediction_reproduction_check": {
+    "frozen_file_supplied": true,
+    "max_absolute_deviation": 1.3322676295501878e-15
+  },
+  "activation_layer": 25,
+  "activation_alpha": 10.0,
+  "bootstrap_repeats": 10000,
+  "confirmation_prompts": 40,
+  "confirmation_ladders": 10,
+  "interval_caveat": "Ladder bootstrap covers evaluation-ladder resampling only, with ten confirmation ladders. It does not cover model fitting or layer selection, and the subgroup intervals are wide.",
+  "observed_length_engagement_association": {
+    "note": "Response length is measured after generation. This is an alternative explanation of what the activations encode, not an operational pre-answer predictor.",
+    "development": {
+      "spearman": 0.7362104651221618,
+      "pearson": 0.760372491664904,
+      "mae": 412.7972222222223
+    },
+    "confirmation": {
+      "spearman": 0.7663687719291433,
+      "pearson": 0.9104456019110163,
+      "bootstrap_repeats": 10000,
+      "usable_bootstrap_samples": 10000,
+      "degenerate_bootstrap_samples": 0,
+      "independent_ladders": 10,
+      "spearman_95_percent_interval": [
+        0.6884961166256858,
+        0.8513644150670012
+      ],
+      "pearson_95_percent_interval": [
+        0.872704181018452,
+        0.9562746251834714
+      ]
+    }
+  },
+  "activation_length_decoding": {
+    "note": "Activations also predict observed response length, as expected given the strong length-engagement association. This does not establish a distinct planned-length representation; when two targets are this collinear, decoding one largely implies decoding the other.",
+    "development_selected_layer": 24,
+    "development_selected_layer_confirmation": {
+      "spearman": 0.883384936808186,
+      "pearson": 0.9474474185925126,
+      "bootstrap_repeats": 10000,
+      "usable_bootstrap_samples": 10000,
+      "degenerate_bootstrap_samples": 0,
+      "independent_ladders": 10,
+      "spearman_95_percent_interval": [
+        0.7332417303040107,
+        0.9561700643073558
+      ],
+      "pearson_95_percent_interval": [
+        0.9064027708557558,
+        0.9755552228135717
+      ]
+    },
+    "primary_engagement_layer": 25,
+    "primary_engagement_layer_confirmation": {
+      "spearman": 0.8828220322180363,
+      "pearson": 0.9432951926834277,
+      "bootstrap_repeats": 10000,
+      "usable_bootstrap_samples": 10000,
+      "degenerate_bootstrap_samples": 0,
+      "independent_ladders": 10,
+      "spearman_95_percent_interval": [
+        0.7337373846707885,
+        0.9566038510500646
+      ],
+      "pearson_95_percent_interval": [
+        0.900063100892975,
+        0.9750298106787215
+      ]
+    }
+  },
+  "probe_prediction_versus_length": {
+    "spearman": 0.6616005282892234,
+    "pearson": 0.8417577948412268,
+    "bootstrap_repeats": 10000,
+    "usable_bootstrap_samples": 10000,
+    "degenerate_bootstrap_samples": 0,
+    "independent_ladders": 10,
+    "spearman_95_percent_interval": [
+      0.5371883653432594,
+      0.7613194695166142
+    ],
+    "pearson_95_percent_interval": [
+      0.7577552859272545,
+      0.9219617045359486
+    ]
+  },
+  "fixed_engagement_subgroups": {
+    "note": "A falsification check, not a matched-length experiment: engagement is held constant by the rubric while length varies, rather than length being held constant. It cannot rule out nonlinear or condition-specific length dependence.",
+    "subgroups": [
+      {
+        "design_condition": "A",
+        "prompts": 10,
+        "engagement_mean": 3.0,
+        "engagement_sd": 0.0,
+        "engagement_min": 3.0,
+        "engagement_max": 3.0,
+        "engagement_fixed": true,
+        "length_min": 586.0,
+        "length_max": 723.3333333333334,
+        "prediction_vs_length_spearman": -0.309090909090909,
+        "prediction_vs_length_pearson": -0.36885569666528467,
+        "prediction_vs_length_spearman_low": -0.8875152972027971,
+        "prediction_vs_length_spearman_high": 0.4843573113207536,
+        "degenerate_bootstrap_samples": 0
+      },
+      {
+        "design_condition": "B",
+        "prompts": 10,
+        "engagement_mean": 1.9499999999999997,
+        "engagement_sd": 0.9119124750434756,
+        "engagement_min": 0.8888888888888888,
+        "engagement_max": 3.0,
+        "engagement_fixed": false,
+        "length_min": 181.0,
+        "length_max": 799.0,
+        "prediction_vs_length_spearman": 0.7841981513472833,
+        "prediction_vs_length_pearson": 0.8596962108550158,
+        "prediction_vs_length_spearman_low": 0.3,
+        "prediction_vs_length_spearman_high": 0.9622641509433963,
+        "degenerate_bootstrap_samples": 0
+      },
+      {
+        "design_condition": "C",
+        "prompts": 10,
+        "engagement_mean": 0.7666666666666667,
+        "engagement_sd": 0.4870053503281923,
+        "engagement_min": 0.0,
+        "engagement_max": 1.6666666666666667,
+        "engagement_fixed": false,
+        "length_min": 10.0,
+        "length_max": 276.0,
+        "prediction_vs_length_spearman": 0.3939393939393939,
+        "prediction_vs_length_pearson": 0.2805388385326916,
+        "prediction_vs_length_spearman_low": -0.2955974842767296,
+        "prediction_vs_length_spearman_high": 0.7484276729559749,
+        "degenerate_bootstrap_samples": 0
+      },
+      {
+        "design_condition": "D_capability",
+        "prompts": 5,
+        "engagement_mean": 0.7777777777777777,
+        "engagement_sd": 0.13028932666176193,
+        "engagement_min": 0.6666666666666666,
+        "engagement_max": 0.9444444444444444,
+        "engagement_fixed": false,
+        "length_min": 159.0,
+        "length_max": 305.0,
+        "prediction_vs_length_spearman": -0.7,
+        "prediction_vs_length_pearson": -0.5172606826528495,
+        "prediction_vs_length_spearman_low": -1.0,
+        "prediction_vs_length_spearman_high": 0.8749999999999999,
+        "degenerate_bootstrap_samples": 19
+      },
+      {
+        "design_condition": "D_harmful_request",
+        "prompts": 5,
+        "engagement_mean": 0.6444444444444445,
+        "engagement_sd": 1.317967009085219,
+        "engagement_min": 0.0,
+        "engagement_max": 3.0,
+        "engagement_fixed": false,
+        "length_min": 221.33333333333331,
+        "length_max": 694.0,
+        "prediction_vs_length_spearman": 0.09999999999999999,
+        "prediction_vs_length_pearson": 0.9134795844678847,
+        "prediction_vs_length_spearman_low": -1.0,
+        "prediction_vs_length_spearman_high": 1.0,
+        "degenerate_bootstrap_samples": 16
+      }
+    ]
+  },
+  "length_adjusted_engagement_decoding": {
+    "note": "These are sensitivity analyses, not length-corrected estimates of engagement decodability. If length is a nuisance the adjustment removes confounding; if length is a mediator of a genuine intention to engage, the same adjustment removes part of the construct. Observed length cannot distinguish the two.",
+    "linear_fit_quality": {
+      "development_raw_pearson": 0.760372491664904,
+      "development_log_pearson": 0.5619152647576044,
+      "confirmation_raw_pearson": 0.9104456019110163,
+      "confirmation_log_pearson": 0.7591954747454022,
+      "note": "Raw length is the better-fitting simple form here, so the raw adjustment is not a weak correction."
+    },
+    "raw_length_adjustment": {
+      "nuisance_coefficients_intercept_slope": [
+        -0.09009919476611564,
+        0.004505522456838674
+      ],
+      "primary_layer": 25,
+      "primary_layer_metrics": {
+        "spearman": 0.7551594746716699,
+        "pearson": 0.8522598440398798,
+        "mae": 0.3031071368303742
+      },
+      "primary_layer_association": {
+        "spearman": 0.7551594746716699,
+        "pearson": 0.8522598440398798,
+        "bootstrap_repeats": 10000,
+        "usable_bootstrap_samples": 10000,
+        "degenerate_bootstrap_samples": 0,
+        "independent_ladders": 10,
+        "spearman_95_percent_interval": [
+          0.5120484701434487,
+          0.873544861981107
+        ],
+        "pearson_95_percent_interval": [
+          0.7371214064950106,
+          0.9200573639540623
+        ]
+      },
+      "development_selected_residual_layer": 18,
+      "development_selected_layer_metrics": {
+        "spearman": 0.6435272045028143,
+        "pearson": 0.8141701737390082,
+        "mae": 0.2836045747158651
+      },
+      "development_selected_layer_association": {
+        "spearman": 0.6435272045028143,
+        "pearson": 0.8141701737390082,
+        "bootstrap_repeats": 10000,
+        "usable_bootstrap_samples": 10000,
+        "degenerate_bootstrap_samples": 0,
+        "independent_ladders": 10,
+        "spearman_95_percent_interval": [
+          0.32867670210828986,
+          0.8165436985658853
+        ],
+        "pearson_95_percent_interval": [
+          0.6401389730248881,
+          0.896652280713894
+        ]
+      },
+      "confirmation_residual_condition_eta_squared": 0.45951343417744595
+    },
+    "development_quantile_rank_adjustment": {
+      "nuisance_coefficients_intercept_slope": [
+        0.2818070207523568,
+        2.9919415140508407
+      ],
+      "primary_layer": 25,
+      "primary_layer_metrics": {
+        "spearman": 0.6324233070331331,
+        "pearson": 0.8018908094034572,
+        "mae": 0.3341000110450182
+      },
+      "primary_layer_association": {
+        "spearman": 0.6324233070331331,
+        "pearson": 0.8018908094034572,
+        "bootstrap_repeats": 10000,
+        "usable_bootstrap_samples": 10000,
+        "degenerate_bootstrap_samples": 0,
+        "independent_ladders": 10,
+        "spearman_95_percent_interval": [
+          0.3141151993410613,
+          0.8202586338185208
+        ],
+        "pearson_95_percent_interval": [
+          0.6402749140581213,
+          0.8895569313215866
+        ]
+      },
+      "development_selected_residual_layer": 18,
+      "development_selected_layer_metrics": {
+        "spearman": 0.5451730955599372,
+        "pearson": 0.7633105451185336,
+        "mae": 0.3073947994077476
+      },
+      "development_selected_layer_association": {
+        "spearman": 0.5451730955599372,
+        "pearson": 0.7633105451185336,
+        "bootstrap_repeats": 10000,
+        "usable_bootstrap_samples": 10000,
+        "degenerate_bootstrap_samples": 0,
+        "independent_ladders": 10,
+        "spearman_95_percent_interval": [
+          0.2175777373010771,
+          0.7469902761036886
+        ],
+        "pearson_95_percent_interval": [
+          0.5383489184683439,
+          0.8746830834652669
+        ]
+      },
+      "confirmation_residual_condition_eta_squared": 0.4287408254730212
+    }
+  },
+  "within_condition_length_engagement": {
+    "note": "Length carries information about engagement beyond the coarse design condition, so it cannot be dismissed as a condition proxy. This is the counterweight to the fixed-engagement subgroup result.",
+    "confirmation_internal_centering": {
+      "note": "Descriptive within-confirmation statistic using confirmation-set condition means.",
+      "spearman": 0.7551941522931733,
+      "pearson": 0.8461850447094191,
+      "bootstrap_repeats": 10000,
+      "usable_bootstrap_samples": 10000,
+      "degenerate_bootstrap_samples": 0,
+      "independent_ladders": 10,
+      "spearman_95_percent_interval": [
+        0.6224399914845828,
+        0.868771155881948
+      ],
+      "pearson_95_percent_interval": [
+        0.7380078433517978,
+        0.9140156197990947
+      ]
+    },
+    "development_estimated_condition_effects": {
+      "note": "Condition effects for both variables are fit on development only, preserving the held-out logic.",
+      "spearman": 0.7081748608819979,
+      "pearson": 0.8343897511851289,
+      "bootstrap_repeats": 10000,
+      "usable_bootstrap_samples": 10000,
+      "degenerate_bootstrap_samples": 0,
+      "independent_ladders": 10,
+      "spearman_95_percent_interval": [
+        0.5449015230927878,
+        0.8449818443217123
+      ],
+      "pearson_95_percent_interval": [
+        0.7243642678040911,
+        0.8997361320096966
+      ]
+    },
+    "confirmation_condition_eta_squared_length": 0.6475820853644191,
+    "confirmation_condition_eta_squared_engagement": 0.6822256058464309
+  }
+}
